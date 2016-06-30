@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpMongoMigrations", "CSharpMongoMigrations\CSharpMongoMigrations.csproj", "{5FC4EA15-D8C7-41F6-8A4E-34E71D487476}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpMongoMigrations.Demo", "CSharpMongoMigrations.Demo\CSharpMongoMigrations.Demo.csproj", "{2EC22794-BFA4-4B72-B2F2-3279F4D3A874}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5FC4EA15-D8C7-41F6-8A4E-34E71D487476}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FC4EA15-D8C7-41F6-8A4E-34E71D487476}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FC4EA15-D8C7-41F6-8A4E-34E71D487476}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FC4EA15-D8C7-41F6-8A4E-34E71D487476}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EC22794-BFA4-4B72-B2F2-3279F4D3A874}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EC22794-BFA4-4B72-B2F2-3279F4D3A874}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EC22794-BFA4-4B72-B2F2-3279F4D3A874}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EC22794-BFA4-4B72-B2F2-3279F4D3A874}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
