@@ -6,12 +6,12 @@ using System.Reflection;
 
 namespace CSharpMongoMigrations
 {
-    public interface IMigrationLocator
+    internal interface IMigrationLocator
     {
         IEnumerable<VersionedMigration> GetMigrations(MigrationVersion after, MigrationVersion before);
     }
 
-    public class MigrationLocator : IMigrationLocator
+    internal class MigrationLocator : IMigrationLocator
     {
         private readonly Assembly _assembly;
         private readonly IMongoDatabase _database;

@@ -1,11 +1,9 @@
-﻿using CSharpMongoMigrations.Extensions;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using System.Linq;
-using System;
 
 namespace CSharpMongoMigrations
 {
-    public interface IDatabaseMigrations
+    internal interface IDatabaseMigrations
     {
         MigrationVersion GetLastAppliedMigration();
 
@@ -16,7 +14,7 @@ namespace CSharpMongoMigrations
         IMongoDatabase GetDatabase();
     }
 
-    public class DatabaseMigrations : IDatabaseMigrations
+    internal class DatabaseMigrations : IDatabaseMigrations
     {
         private readonly IMongoDatabase _db;
         private readonly string _collectionName = typeof(MigrationVersion).Name;

@@ -3,12 +3,22 @@ using System.Linq;
 
 namespace CSharpMongoMigrations
 {
+    /// <summary>
+    /// Migration runner. Responsible for running migrations from specified assembly
+    /// </summary>
+    /// <remarks></remarks>
     public class MigrationRunner
     {
         private readonly IDatabaseMigrations _dbMigrations;
         private readonly IMigrationLocator _locator;
         private readonly string _migrationAssembly;
 
+        /// <summary>
+        /// Cts
+        /// </summary>
+        /// <param name="server">MongoDb server connection string</param>
+        /// <param name="database">Mongo database name</param>
+        /// <param name="migrationAssembly">Assembly with migrations</param>
         public MigrationRunner(string server, string database, string migrationAssembly)
         {
             _dbMigrations = new DatabaseMigrations(server, database);
@@ -17,6 +27,11 @@ namespace CSharpMongoMigrations
             _migrationAssembly = migrationAssembly;
         }
 
+        /// <summary>
+        /// Apply all migrations up before specified version.
+        /// Use -1 to apply all existing migrations
+        /// </summary>
+        /// <param name="version"></param>
         public void Up(long version = -1)
         {
             version = version == -1 ? long.MaxValue : version;
@@ -39,6 +54,11 @@ namespace CSharpMongoMigrations
             }
         }
 
+        /// <summary>
+        /// Apply all migrations down after specified version.
+        /// Use -1 to downgrade all existing migrations
+        /// </summary>
+        /// <param name="version"></param>
         public void Down(long version = -1)
         {
             Console.WriteLine($"Discovering migrations in {_migrationAssembly}");

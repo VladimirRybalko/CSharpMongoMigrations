@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CSharpMongoMigrations
 {
-    public class MongoClientFactory
+    internal class MongoClientFactory
     {
         private static readonly Dictionary<string, IMongoClient> _clients = new Dictionary<string, IMongoClient>();
 

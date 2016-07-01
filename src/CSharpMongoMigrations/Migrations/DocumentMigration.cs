@@ -1,11 +1,14 @@
-﻿using CSharpMongoMigrations.Extensions;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 
 namespace CSharpMongoMigrations
 {
+    /// <summary>
+    /// Base class for document migration
+    /// Migrate each document in collection
+    /// </summary>
     public abstract class DocumentMigration : Migration 
     {
         protected abstract string CollectionName { get; }
@@ -41,7 +44,16 @@ namespace CSharpMongoMigrations
             return GetCollection().FindAll().ToList();
         }
 
-        protected virtual void UpgradeDocument(BsonDocument document) { }
-        protected virtual void DowngradeDocument(BsonDocument document) { }
+        /// <summary>
+        /// Upgrade specified document
+        /// </summary>
+        /// <param name="document"></param>
+        protected abstract void UpgradeDocument(BsonDocument document);
+
+        /// <summary>
+        /// Downgrade specified document
+        /// </summary>
+        /// <param name="document"></param>
+        protected abstract void DowngradeDocument(BsonDocument document);
     }
 }

@@ -3,6 +3,9 @@ using MongoDB.Driver;
 
 namespace CSharpMongoMigrations
 {
+    /// <summary>
+    /// Base class for mongo migrations
+    /// </summary>
     public abstract class Migration : IDbMigration
     {
         protected IMongoDatabase Database { get; private set; }
@@ -11,15 +14,10 @@ namespace CSharpMongoMigrations
         {
             Database = database;
         }
-
-        public virtual void Down()
-        {
-        }        
-
-        public virtual void Up()
-        {
-        }
-
+        
+        public abstract void Up();
+        public abstract void Down();
+        
         protected IMongoCollection<BsonDocument> GetCollection(string name)
         {
             return Database.GetCollection<BsonDocument>(name);

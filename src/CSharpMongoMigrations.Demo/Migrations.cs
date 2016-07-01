@@ -1,9 +1,8 @@
-﻿using CSharpMongoMigrations.Extensions;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 
-namespace CSharpMongoMigrations.Demo.Migrations
+namespace CSharpMongoMigrations.Demo
 {
     [Migration(0, "Add John Doe")]
     public class AddPersonMigration : Migration
