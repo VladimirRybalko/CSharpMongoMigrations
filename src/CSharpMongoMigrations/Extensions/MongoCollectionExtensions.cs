@@ -3,6 +3,9 @@ using MongoDB.Driver;
 
 namespace CSharpMongoMigrations
 {
+    /// <summary>
+    /// Mongo collection extensions
+    /// </summary>
     public static class MongoCollectionExtensions
     {
         /// <summary>
@@ -12,7 +15,7 @@ namespace CSharpMongoMigrations
         /// <param name="document">Document for updating</param>
         public static void Update(this IMongoCollection<BsonDocument> collection, BsonDocument document)
         {
-            var idFilter = Builders<BsonDocument>.Filter.Eq("_id", document.GetValue("_id").AsGuid);
+            var idFilter = Builders<BsonDocument>.Filter.Eq("_id", document.GetValue("_id").AsGuid);            
             collection.ReplaceOne(idFilter, document);
         }
 
