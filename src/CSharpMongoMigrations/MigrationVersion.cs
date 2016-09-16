@@ -2,12 +2,21 @@
 
 namespace CSharpMongoMigrations
 {
+    /// <summary>
+    /// Migration version
+    /// </summary>
     public class MigrationVersion
     {
         public Guid Id { get; } = Guid.NewGuid();
 
+        /// <summary>
+        /// Sequence number of the current migration
+        /// </summary>
         public long Version { get; private set; }
 
+        /// <summary>
+        /// Text description of the current migration
+        /// </summary>
         public string Description { get; private set;}
         
         public MigrationVersion()

@@ -1,6 +1,6 @@
 ﻿namespace CSharpMongoMigrations
 {
-    public class VersionedMigration : IMigration
+    internal class VersionedMigration : IMigration
     {
         private readonly IMigration _migration;
         public MigrationVersion Version { get; private set; }

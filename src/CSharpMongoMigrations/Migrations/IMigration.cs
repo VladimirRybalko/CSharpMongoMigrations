@@ -3,7 +3,7 @@
     /// <summary>
     /// Mongo migration
     /// </summary>
-    public interface IMigration
+    internal interface IMigration
     {
         /// <summary>
         /// Execute migration up

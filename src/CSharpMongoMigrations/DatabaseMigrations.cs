@@ -3,14 +3,17 @@ using System.Linq;
 
 namespace CSharpMongoMigrations
 {
+    /// <summary>
+    /// Represent the existing database migrations and allow to apply new migrations 
+    /// </summary>
+    /// <remarks>For internal using only</remarks>
     internal interface IDatabaseMigrations
     {
         MigrationVersion GetLastAppliedMigration();
 
         void ApplyMigration(MigrationVersion version);
         void CancelMigration(MigrationVersion version);
-
-
+        
         IMongoDatabase GetDatabase();
     }
 

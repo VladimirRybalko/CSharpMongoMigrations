@@ -79,6 +79,7 @@
     <Compile Include="AutoFixture.cs" />
     <Compile Include="Extensions\BsonDocumentExtensionsTests.cs" />
     <Compile Include="Extensions\MongoCollectionExtensionsTests.cs" />
+    <Compile Include="Migrations\MigrationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

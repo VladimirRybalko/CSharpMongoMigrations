@@ -9,7 +9,7 @@ namespace CSharpMongoMigrations
     public static class MongoCollectionExtensions
     {
         /// <summary>
-        /// Update document 
+        /// Update document in specified collection
         /// </summary>
         /// <param name="collection"></param>
         /// <param name="document">Document for updating</param>

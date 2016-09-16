@@ -10,7 +10,7 @@ namespace CSharpMongoMigrations
     {
         protected IMongoDatabase Database { get; private set; }
 
-        void IDbMigration.SetDatabase(IMongoDatabase database)
+        void IDbMigration.UseDatabase(IMongoDatabase database)
         {
             Database = database;
         }

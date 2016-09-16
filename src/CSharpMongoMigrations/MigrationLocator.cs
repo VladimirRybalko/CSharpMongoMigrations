@@ -6,8 +6,17 @@ using System.Reflection;
 
 namespace CSharpMongoMigrations
 {
+    /// <summary>
+    /// Helper class for migrations discovery.
+    /// </summary>
     internal interface IMigrationLocator
     {
+        /// <summary>
+        /// Discovery all migrations in specified assembly between specified versions
+        /// </summary>
+        /// <param name="after">The lower limit of the search</param>
+        /// <param name="before">The upper limit of the search</param>
+        /// <returns></returns>
         IEnumerable<VersionedMigration> GetMigrations(MigrationVersion after, MigrationVersion before);
     }
 
@@ -35,7 +44,7 @@ namespace CSharpMongoMigrations
                 ).ToList();
 
             foreach (var m in migrations)
-                ((IDbMigration)m.Migration).SetDatabase(_database);
+                ((IDbMigration)m.Migration).UseDatabase(_database);
 
             return migrations.Select(x => new VersionedMigration(x.Migration, x.Version));                
         }
