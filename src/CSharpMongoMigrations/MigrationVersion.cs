@@ -27,7 +27,7 @@ namespace CSharpMongoMigrations
 
         public MigrationVersion(long version, string description)
         {
-            Version = version; ;
+            Version = version;
             Description = description;
         }
 
