@@ -59,4 +59,20 @@ namespace CSharpMongoMigrations.Demo
             document.ChangeValue("IsActive", true);
         }
     }
+
+    [Migration(3, "Add type property")]
+    public class AddTypePropertyMigration : DocumentMigration
+    {
+        protected override string CollectionName { get { return "Persons"; } }
+
+        protected override void UpgradeDocument(BsonDocument document)
+        {
+            document.AddProperty("Type", 0);
+        }
+
+        protected override void DowngradeDocument(BsonDocument document)
+        {
+            document.RemoveProperty("Type");
+        }
+    }
 }

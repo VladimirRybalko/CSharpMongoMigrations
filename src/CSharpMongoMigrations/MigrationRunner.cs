@@ -38,8 +38,11 @@ namespace CSharpMongoMigrations
 
             Console.WriteLine($"Discovering migrations in {_migrationAssembly}");
             
-            var lastMigrationVersion = _dbMigrations.GetLastAppliedMigration();
-            var inapplicableMigrations = _locator.GetMigrations(lastMigrationVersion, new MigrationVersion(version)).ToList();
+            var appliedMigrations = _dbMigrations.GetAppliedMigrations();
+            var inapplicableMigrations = 
+                _locator.GetMigrations(MigrationVersion.Min, new MigrationVersion(version))
+                .Where(m => appliedMigrations.All(x => x.Version != m.Version.Version))
+                .ToList();
 
             Console.WriteLine($"Found ({inapplicableMigrations.Count}) migrations in {_migrationAssembly}");
 
@@ -63,8 +66,11 @@ namespace CSharpMongoMigrations
         {
             Console.WriteLine($"Discovering migrations in {_migrationAssembly}");
 
-            var lastMigrationVersion = _dbMigrations.GetLastAppliedMigration();
-            var downgradedMigrations = _locator.GetMigrations(new MigrationVersion(version), lastMigrationVersion).ToList();
+            var appliedMigrations = _dbMigrations.GetAppliedMigrations();
+            var downgradedMigrations = 
+                _locator.GetMigrations(new MigrationVersion(version), MigrationVersion.Max)
+                .Where(m => appliedMigrations.Any(x => x.Version == m.Version.Version))
+                .ToList();
 
             Console.WriteLine($"Found ({downgradedMigrations.Count}) migrations in {_migrationAssembly}");
 

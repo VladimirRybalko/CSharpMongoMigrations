@@ -7,6 +7,9 @@ namespace CSharpMongoMigrations
     /// </summary>
     public class MigrationVersion
     {
+        public static MigrationVersion Min = new MigrationVersion(-1);
+        public static MigrationVersion Max = new MigrationVersion(long.MaxValue);
+
         public Guid Id { get; } = Guid.NewGuid();
 
         /// <summary>
@@ -18,10 +21,7 @@ namespace CSharpMongoMigrations
         /// Text description of the current migration
         /// </summary>
         public string Description { get; private set;}
-        
-        public MigrationVersion()
-            :this(long.MinValue) { }
-
+                
         public MigrationVersion(long version)
             : this(version, null) { }
 

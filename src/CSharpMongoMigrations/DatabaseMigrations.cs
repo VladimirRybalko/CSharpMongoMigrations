@@ -1,4 +1,5 @@
 ﻿using MongoDB.Driver;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CSharpMongoMigrations
@@ -9,7 +10,7 @@ namespace CSharpMongoMigrations
     /// <remarks>For internal using only</remarks>
     internal interface IDatabaseMigrations
     {
-        MigrationVersion GetLastAppliedMigration();
+        List<MigrationVersion> GetAppliedMigrations();
 
         void ApplyMigration(MigrationVersion version);
         void CancelMigration(MigrationVersion version);
@@ -28,15 +29,12 @@ namespace CSharpMongoMigrations
             _db = client.GetDatabase(database);
         }
 
-        public MigrationVersion GetLastAppliedMigration()
+        public List<MigrationVersion> GetAppliedMigrations()
         {
-            var lastMigration = _db.GetCollection<MigrationVersion>(_collectionName)
+           return _db.GetCollection<MigrationVersion>(_collectionName)
                 .FindAll()
                 .SortByDescending(x => x.Version)
-                .ToList()
-                .FirstOrDefault();
-
-            return lastMigration ?? new MigrationVersion();
+                .ToList();
         }
 
         public IMongoDatabase GetDatabase()
