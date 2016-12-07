@@ -47,7 +47,7 @@ There are two types of migrations in solution.
     }
 ```
 
-Here we define the **Up** migration to added John Doe to *Person* collection. The **Down** method revert back the migration and restore database to the original state.
+Here we define the **Up** migration to added John Doe to *Person* collection. The **Down** method roll back the migration and restore database to the original state.
 
 Take attention to **Migration** attribute. It's required to running migration by launcher. You should define the migration number (<span style="color:gray">'0' in example</span>) and description (<span style="color:gray">Add John Doe'</span>).
 Note that each migration must have the unique number and arbitrary description.
@@ -77,7 +77,7 @@ Such migrations allow to apply changes to each document in the specified collect
 You can find more detailed examples in *CSharpMongoMigrations.Demo* project.
 
 
-## How to launch?
+## How to launch migrations?
 It's a really simple. You should create an instance of *MigrationRunner* class.
 
 ```csharp
@@ -86,11 +86,11 @@ It's a really simple. You should create an instance of *MigrationRunner* class.
 Then you can call *Up* or *Down* method to apply or downgrade migrations.
 
 ```csharp
-   // Apply all 'up' migrations before specified version.
+   // Apply all migrations before specified version.
    // Use -1 to apply all existing migrations. ('-1' is a default parameter value)
    runner.Up("<version>"); 
    
-   // Apply all 'down' migrations after specified version.
+   // Rool back all migrations after specified version.
    // Use -1 to downgrade all existing migrations. ('-1' is a default parameter value)
    runner.Down("<version>"); 
    
