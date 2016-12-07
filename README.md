@@ -77,7 +77,7 @@ Such migrations allow to apply changes to each document in the specified collect
 You can find more detailed examples in *CSharpMongoMigrations.Demo* project.
 
 
-## How to launch
+## How to launch?
 It's a really simple. You should create an instance of *MigrationRunner* class.
 
 ```csharp
