@@ -28,7 +28,7 @@ namespace CSharpMongoMigrations
         }
 
         /// <summary>
-        /// Apply all migrations up before specified version.
+        /// Apply all 'up' migrations before specified version.
         /// Use -1 to apply all existing migrations
         /// </summary>
         /// <param name="version"></param>
@@ -58,7 +58,7 @@ namespace CSharpMongoMigrations
         }
 
         /// <summary>
-        /// Apply all migrations down after specified version.
+        /// Apply all 'down' migrations after specified version.
         /// Use -1 to downgrade all existing migrations
         /// </summary>
         /// <param name="version"></param>
