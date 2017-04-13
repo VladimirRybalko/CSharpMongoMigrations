@@ -90,7 +90,7 @@ Then you can call *Up* or *Down* method to apply or downgrade migrations.
    // Use -1 to apply all existing migrations. ('-1' is a default parameter value)
    runner.Up("<version>"); 
    
-   // Rool back all migrations after specified version.
+   // Roll back all migrations after specified version.
    // Use -1 to downgrade all existing migrations. ('-1' is a default parameter value)
    runner.Down("<version>"); 
    
