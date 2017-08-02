@@ -2,7 +2,7 @@
 
 ## What is it?
 
-**CSharpMongoMigrations** is an alternative .NET library for mongo migrations. Despite of the official package library allows both the *Up* and the *Down* data migrations. It's a big advantage for huge MongoDb projects. Moreover solution does not have any dependencies from the outdated MongoDb driver. So you don't need to reference two different versions of the driver.
+**CSharpMongoMigrations** is an alternative .NET library for mongo migrations. Despite the official package allows both the *Up* and the *Down* data migrations. It's a big advantage for huge MongoDb projects. Moreover solution does not have any dependencies from the outdated MongoDb driver. So you don't need to reference two different versions of the driver.
 
 
 ## Installation
@@ -49,7 +49,7 @@ There are two types of migrations in solution.
 
 Here we define the **Up** migration to added John Doe to *Person* collection. The **Down** method roll back the migration and restore database to the original state.
 
-Take attention to **Migration** attribute. It's required to running migration by launcher. You should define the migration number (<span style="color:gray">'0' in example</span>) and description (<span style="color:gray">Add John Doe'</span>).
+Take attention to **Migration** attribute. It's required to running migration by launcher. You should define the migration number (<span style="color:gray">'0' in example</span>) and description (<span style="color:gray">'Add John Doe'</span>).
 Note that each migration must have the unique number and arbitrary description.
 
 
