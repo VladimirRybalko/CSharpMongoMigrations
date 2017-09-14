@@ -1,18 +1,17 @@
 ﻿using FluentAssertions;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 
-namespace CSharpMongoMigrations.Tests.Migrations
+namespace CSharpMongoMigrations.Tests
 {
-    [TestFixture(TestOf = typeof(VersionedMigration))]
-    public class VersionedMigrationTests
+    public class VersionedMigrationFacts
     {
-        [Test]
-        public void CtsTest()
+        [Fact]
+        public void CtsFact()
         {
             // Arrange
             var migration = new Mock<IMigration>();
-            var version = AutoFixture.Create<long>();
+            var version = AutoFixture.Long();
             
             // Act
             var versionedMigration = new VersionedMigration(migration.Object, new MigrationVersion(version));
@@ -21,8 +20,8 @@ namespace CSharpMongoMigrations.Tests.Migrations
             versionedMigration.Version.Version.Should().Be(version);
         }
 
-        [Test]
-        public void UpTest()
+        [Fact]
+        public void UpFact()
         {
             // Arrange
             var migration = new Mock<IMigration>();
@@ -36,13 +35,13 @@ namespace CSharpMongoMigrations.Tests.Migrations
             migration.VerifyAll();
         }
 
-        [Test]
-        public void DownTest()
+        [Fact]
+        public void DownFact()
         {
             // Arrange
             var migration = new Mock<IMigration>();
             migration.Setup(x => x.Down());
-            var version = AutoFixture.Create<long>();
+            var version = AutoFixture.Long();
             var versionedMigration = new VersionedMigration(migration.Object, MigrationVersion.Min);
 
             // Act

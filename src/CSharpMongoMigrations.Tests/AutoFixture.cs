@@ -1,14 +1,26 @@
-﻿using Ploeh.AutoFixture;
+﻿using System;
+using System.IO;
+using System.Linq;
 
 namespace CSharpMongoMigrations.Tests
 {
     public static class AutoFixture
-    {
-        private static readonly Fixture _fixture = new Fixture();
+    {       
+        private static Random rand = new Random();
 
-        public static T Create<T>()
+        public static string String()
         {
-            return _fixture.Create<T>();
+            return Path.GetRandomFileName();
+        }
+
+        public static int Int()
+        {
+            return rand.Next();
+        }
+
+        public static long Long()
+        {
+            return (long)rand.Next();
         }
     }
 }

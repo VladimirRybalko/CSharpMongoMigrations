@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpMongoMigrations", "CSharpMongoMigrations\CSharpMongoMigrations.csproj", "{5FC4EA15-D8C7-41F6-8A4E-34E71D487476}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSharpMongoMigrations", "CSharpMongoMigrations\CSharpMongoMigrations.csproj", "{8D93E788-691F-46E3-A4F3-83FD4832BF2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpMongoMigrations.Demo", "CSharpMongoMigrations.Demo\CSharpMongoMigrations.Demo.csproj", "{2EC22794-BFA4-4B72-B2F2-3279F4D3A874}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSharpMongoMigrations.Demo", "CSharpMongoMigrations.Demo\CSharpMongoMigrations.Demo.csproj", "{9F8EA935-AE93-474F-B86E-F83ED3C45789}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpMongoMigrations.Tests", "CSharpMongoMigrations.Tests\CSharpMongoMigrations.Tests.csproj", "{714C9A93-F79F-4525-9EE6-385002553CFB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpMongoMigrations.Tests", "CSharpMongoMigrations.Tests\CSharpMongoMigrations.Tests.csproj", "{E862FF52-5809-4455-B0E1-BDD5408E83C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,20 +15,23 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5FC4EA15-D8C7-41F6-8A4E-34E71D487476}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5FC4EA15-D8C7-41F6-8A4E-34E71D487476}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5FC4EA15-D8C7-41F6-8A4E-34E71D487476}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5FC4EA15-D8C7-41F6-8A4E-34E71D487476}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2EC22794-BFA4-4B72-B2F2-3279F4D3A874}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2EC22794-BFA4-4B72-B2F2-3279F4D3A874}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2EC22794-BFA4-4B72-B2F2-3279F4D3A874}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2EC22794-BFA4-4B72-B2F2-3279F4D3A874}.Release|Any CPU.Build.0 = Release|Any CPU
-		{714C9A93-F79F-4525-9EE6-385002553CFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{714C9A93-F79F-4525-9EE6-385002553CFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{714C9A93-F79F-4525-9EE6-385002553CFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{714C9A93-F79F-4525-9EE6-385002553CFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D93E788-691F-46E3-A4F3-83FD4832BF2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D93E788-691F-46E3-A4F3-83FD4832BF2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D93E788-691F-46E3-A4F3-83FD4832BF2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D93E788-691F-46E3-A4F3-83FD4832BF2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F8EA935-AE93-474F-B86E-F83ED3C45789}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F8EA935-AE93-474F-B86E-F83ED3C45789}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F8EA935-AE93-474F-B86E-F83ED3C45789}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F8EA935-AE93-474F-B86E-F83ED3C45789}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E862FF52-5809-4455-B0E1-BDD5408E83C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E862FF52-5809-4455-B0E1-BDD5408E83C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E862FF52-5809-4455-B0E1-BDD5408E83C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E862FF52-5809-4455-B0E1-BDD5408E83C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F3635FA5-E590-4219-A057-5A5685E68FEF}
 	EndGlobalSection
 EndGlobal

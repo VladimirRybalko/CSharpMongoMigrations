@@ -1,17 +1,16 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
 using Moq;
-using NUnit.Framework;
 using System;
 using System.Threading;
+using Xunit;
 
-namespace CSharpMongoMigrations.Tests.Extensions
-{
-    [TestFixture(TestOf = typeof(MongoCollectionExtensions))]
-    public class MongoCollectionExtensionsTests
+namespace CSharpMongoMigrations.Tests
+{   
+    public class MongoCollectionExtensionsFacts
     {
-        [Test]
-        public void UpdateTest()
+        [Fact]
+        public void UpdateFact()
         {
             // Arrange
             var document = new BsonDocument(new BsonElement("_id", Guid.NewGuid()));

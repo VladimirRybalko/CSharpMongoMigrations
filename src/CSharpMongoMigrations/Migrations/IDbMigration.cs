@@ -1,5 +1,8 @@
 ﻿using MongoDB.Driver;
 
+using System.Runtime.CompilerServices;
+[assembly: InternalsVisibleTo("CSharpMongoMigrations.Tests")]
+
 namespace CSharpMongoMigrations
 {
     /// <summary>

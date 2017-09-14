@@ -1,20 +1,19 @@
 ﻿using FluentAssertions;
 using MongoDB.Bson;
-using NUnit.Framework;
 using System;
+using Xunit;
 
 namespace CSharpMongoMigrations.Tests
 {
-    [TestFixture(TestOf = typeof(BsonDocumentExtensions))]
-    public class BsonDocumentExtensionsTests 
+    public class BsonDocumentExtensionsFacts 
     {
-        [Test]
-        public void RenamePropertyTest()
+        [Fact]
+        public void RenamePropertyFact()
         {
             // Arrange
-            var oldName = AutoFixture.Create<string>();
-            var newName = AutoFixture.Create<string>();
-            var value = AutoFixture.Create<int>();
+            var oldName = AutoFixture.String();
+            var newName = AutoFixture.String();
+            var value = AutoFixture.String();
             var document = new BsonDocument(new BsonElement(oldName, value));
 
             // Act
@@ -28,11 +27,11 @@ namespace CSharpMongoMigrations.Tests
             @new.Value.Should().Be(value);
         }
 
-        [Test]
-        public void RemovePropertyTest()
+        [Fact]
+        public void RemovePropertyFact()
         {
             // Arrange
-            var name = AutoFixture.Create<string>();
+            var name = AutoFixture.String();
             var document = new BsonDocument(new BsonElement(name, string.Empty));
 
             // Act
@@ -43,12 +42,12 @@ namespace CSharpMongoMigrations.Tests
         }
 
 
-        [Test]
-        public void AddPropertyTest()
+        [Fact]
+        public void AddPropertyFact()
         {
             // Arrange
-            var name = AutoFixture.Create<string>();
-            var value = AutoFixture.Create<int>();
+            var name = AutoFixture.String();
+            var value = AutoFixture.Int();
             var document = new BsonDocument();
 
             // Act
@@ -60,8 +59,8 @@ namespace CSharpMongoMigrations.Tests
             element.Value.Should().Be(value);
         }
 
-        [Test]
-        public void AddUniqueIdentifierTest()
+        [Fact]
+        public void AddUniqueIdentifierFact()
         {
             // Arrange
             var value = Guid.NewGuid();
@@ -76,11 +75,11 @@ namespace CSharpMongoMigrations.Tests
             element.Value.Should().Be(value);
         }
 
-        [Test]
-        public void ChangeValueTest()
+        [Fact]
+        public void ChangeValueFact()
         {
             // Arrange
-            var name = AutoFixture.Create<string>();
+            var name = AutoFixture.String();
             var oldValue = Guid.NewGuid();
             var newValue = Guid.NewGuid();
             var document = new BsonDocument(new BsonElement(name, oldValue));

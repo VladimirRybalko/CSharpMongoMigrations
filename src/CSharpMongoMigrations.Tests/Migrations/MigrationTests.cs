@@ -1,12 +1,12 @@
 ﻿using FluentAssertions;
 using MongoDB.Driver;
 using Moq;
-using NUnit.Framework;
+using System.ComponentModel;
+using Xunit;
 
-namespace CSharpMongoMigrations.Tests.Migrations
+namespace CSharpMongoMigrations.Tests
 {
-    [TestFixture(TestOf = typeof(Migration))]
-    public class MigrationTests
+    public class MigrationFacts
     {
         private class MigrationStub : Migration
         {
@@ -22,9 +22,9 @@ namespace CSharpMongoMigrations.Tests.Migrations
         }
 
 
-        [Test]
+        [Fact]        
         [Description("Check IDbMigration.UseDatabase method. It's used only for internal purpose.")]
-        public void UseDatabaseTest()
+        public void UseDatabaseFact()
         {
             // Arrange
             var migration = new MigrationStub();
