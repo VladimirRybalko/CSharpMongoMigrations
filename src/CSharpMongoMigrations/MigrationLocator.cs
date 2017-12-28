@@ -27,7 +27,7 @@ namespace CSharpMongoMigrations
 
         public MigrationLocator(string assemblyName, IMongoDatabase database)
         {
-            _assembly = Assembly.LoadFrom(assemblyName);
+            _assembly = Assembly.Load(new AssemblyName(assemblyName));
             _database = database;
         }
 
@@ -36,8 +36,8 @@ namespace CSharpMongoMigrations
             var migrations =
                 (
                     from type in _assembly.GetTypes()
-                    where typeof(IMigration).IsAssignableFrom(type) && !type.IsAbstract
-                    let attribute = type.GetCustomAttribute<MigrationAttribute>()
+                    where typeof(IMigration).GetTypeInfo().IsAssignableFrom(type) && !type.GetTypeInfo().IsAbstract
+                    let attribute = type.GetTypeInfo().GetCustomAttribute<MigrationAttribute>()
                     where attribute != null && after.Version < attribute.Version && attribute.Version <= before.Version
                     orderby attribute.Version
                     select new { Migration = (IMigration)Activator.CreateInstance(type), Version = new MigrationVersion(attribute.Version, attribute.Description) }
