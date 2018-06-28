@@ -12,7 +12,6 @@ namespace CSharpMongoMigrations.Tests
         {
             var url = MongoUrl.Create(connectionString);
             var runner = new MigrationRunner(url, assembly);
-            Assert.NotNull(runner);
         }
 
         [Theory]
@@ -20,7 +19,6 @@ namespace CSharpMongoMigrations.Tests
         public void ShouldCreateMigrationRunnerWithConnectionString(string connectionString, string assembly)
         {
             var runner = new MigrationRunner(connectionString, assembly);
-            Assert.NotNull(runner);
         }
 
         [Fact]
