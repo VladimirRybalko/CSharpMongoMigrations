@@ -23,10 +23,10 @@ namespace CSharpMongoMigrations
         private readonly IMongoDatabase _db;
         private readonly string _collectionName = typeof(MigrationVersion).Name;
 
-        public DatabaseMigrations(string server, string database)
+        public DatabaseMigrations(MongoUrl url)
         {
-            var client = MongoClientFactory.Get($"mongodb://{server}");
-            _db = client.GetDatabase(database);
+            var client = MongoClientFactory.Get(url);
+            _db = client.GetDatabase(url.DatabaseName);
         }
 
         public List<MigrationVersion> GetAppliedMigrations()
@@ -39,7 +39,7 @@ namespace CSharpMongoMigrations
 
         public IMongoDatabase GetDatabase()
         {
-            return _db;            
+            return _db;
         }
 
         public void ApplyMigration(MigrationVersion version)

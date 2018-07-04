@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using MongoDB.Driver;
 
 namespace CSharpMongoMigrations
 {
@@ -16,15 +17,35 @@ namespace CSharpMongoMigrations
         /// <summary>
         /// Cts
         /// </summary>
-        /// <param name="server">MongoDb server connection string</param>
-        /// <param name="database">Mongo database name</param>
+        /// <param name="url">MongoDb connection string</param>
         /// <param name="migrationAssembly">Assembly with migrations</param>
-        public MigrationRunner(string server, string database, string migrationAssembly)
+        public MigrationRunner(MongoUrl url, string migrationAssembly)
         {
-            _dbMigrations = new DatabaseMigrations(server, database);
+            _dbMigrations = new DatabaseMigrations(url);
             _locator = new MigrationLocator(migrationAssembly, _dbMigrations.GetDatabase());
 
             _migrationAssembly = migrationAssembly;
+        }
+
+        /// <summary>
+        /// Creates a new instance of MigrationRunner
+        /// </summary>
+        /// <param name="connectionString">connection string in common URL format</param>
+        /// <param name="migrationAssembly">Assembly containing migrations</param>
+        public MigrationRunner(string connectionString, string migrationAssembly) : 
+            this(MongoUrl.Create(connectionString), migrationAssembly)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new instance of MigrationRunner
+        /// </summary>
+        /// <param name="server">MongoDb server</param>
+        /// <param name="database">MongoDb database</param>
+        /// <param name="migrationAssembly">Assembly containing migrations</param>
+        public MigrationRunner(string server, string database, string migrationAssembly) :
+            this(MongoUrl.Create($"mongodb://{server}/{database}"), migrationAssembly)
+        {
         }
 
         /// <summary>
