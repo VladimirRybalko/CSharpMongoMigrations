@@ -6,21 +6,6 @@ namespace CSharpMongoMigrations.Tests
 {
     public class MigrationRunnerTests
     {
-        [Theory]
-        [InlineData("mongodb://test:27017/db", "System")]
-        public void ShouldCreateMigrationRunnerWithMongoUrl(string connectionString, string assembly)
-        {
-            var url = MongoUrl.Create(connectionString);
-            var runner = new MigrationRunner(url, assembly);
-        }
-
-        [Theory]
-        [InlineData("mongodb://test:27017/db", "System")]
-        public void ShouldCreateMigrationRunnerWithConnectionString(string connectionString, string assembly)
-        {
-            var runner = new MigrationRunner(connectionString, assembly);
-        }
-
         [Fact]
         public void ShouldNotCreateMigrationRunnerWithNullUrl()
         {
