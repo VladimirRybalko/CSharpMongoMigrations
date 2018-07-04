@@ -25,7 +25,7 @@ namespace CSharpMongoMigrations
 
         public DatabaseMigrations(MongoUrl url)
         {
-            var client = new MongoClient(url);
+            var client = MongoClientFactory.Get(url);
             _db = client.GetDatabase(url.DatabaseName);
         }
 
@@ -39,7 +39,7 @@ namespace CSharpMongoMigrations
 
         public IMongoDatabase GetDatabase()
         {
-            return _db;            
+            return _db;
         }
 
         public void ApplyMigration(MigrationVersion version)
