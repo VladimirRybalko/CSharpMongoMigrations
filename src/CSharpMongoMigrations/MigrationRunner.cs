@@ -31,9 +31,20 @@ namespace CSharpMongoMigrations
         /// Creates a new instance of MigrationRunner
         /// </summary>
         /// <param name="connectionString">connection string in common URL format</param>
-        /// <param name="migrationAssembly">Assembly with migrations</param>
+        /// <param name="migrationAssembly">Assembly containing migrations</param>
         public MigrationRunner(string connectionString, string migrationAssembly) : 
             this(MongoUrl.Create(connectionString), migrationAssembly)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new instance of MigrationRunner
+        /// </summary>
+        /// <param name="server">MongoDb server</param>
+        /// <param name="database">MongoDb database</param>
+        /// <param name="migrationAssembly">Assembly containing migrations</param>
+        public MigrationRunner(string server, string database, string migrationAssembly) :
+            this(MongoUrl.Create($"mongodb://{server}/{database}"), migrationAssembly)
         {
         }
 
