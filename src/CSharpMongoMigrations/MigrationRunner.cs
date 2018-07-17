@@ -15,7 +15,7 @@ namespace CSharpMongoMigrations
         private readonly string _migrationAssembly;
 
         /// <summary>
-        /// Cts
+        /// Creates a new instance of MigrationRunner
         /// </summary>
         /// <param name="url">MongoDb connection string</param>
         /// <param name="migrationAssembly">Assembly with migrations</param>
