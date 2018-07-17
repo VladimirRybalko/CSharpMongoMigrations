@@ -21,8 +21,8 @@ namespace CSharpMongoMigrations.Tests
             var @new = document.GetElement(newName);
 
             // Assert
-            Action act = () => document.GetElement(oldName);
-            act.ShouldThrow<Exception>();
+            Action act = () => document.GetElement(oldName);            
+            act.Should().Throw<Exception>();
             @new.Should().NotBeNull();
             @new.Value.Should().Be(value);
         }
@@ -38,7 +38,7 @@ namespace CSharpMongoMigrations.Tests
             document.RemoveProperty(name);
             // Assert
             Action act = () => document.GetElement(name);
-            act.ShouldThrow<Exception>();
+            act.Should().Throw<Exception>();
         }
 
 
