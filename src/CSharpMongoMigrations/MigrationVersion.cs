@@ -21,6 +21,11 @@ namespace CSharpMongoMigrations
         /// Text description of the current migration
         /// </summary>
         public string Description { get; private set;}
+
+        /// <summary>
+        /// Collection affected by the migration
+        /// </summary>
+        public string CollectionName { get; private set; }
                 
         public MigrationVersion(long version)
             : this(version, null) { }
@@ -29,6 +34,12 @@ namespace CSharpMongoMigrations
         {
             Version = version;
             Description = description;
+        }
+
+        public MigrationVersion(long version, string description, string collectionName)
+            : this(version, description)
+        {
+            CollectionName = collectionName;
         }
 
         public override string ToString()

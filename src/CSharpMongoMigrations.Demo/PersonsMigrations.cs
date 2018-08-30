@@ -4,7 +4,7 @@ using System;
 
 namespace CSharpMongoMigrations.Demo
 {
-    [Migration(0, "Add John Doe")]
+    [Migration(0, "Add John Doe", "Persons")]
     public class AddPersonMigration : Migration
     {
         public override void Up()
@@ -27,7 +27,7 @@ namespace CSharpMongoMigrations.Demo
     }
 
 
-    [Migration(1, "Change persons")]
+    [Migration(1, "Change persons", "Persons")]
     public class AddPropertyPersonMigration : DocumentMigration
     {
         protected override string CollectionName { get { return "Persons"; } }
@@ -44,7 +44,7 @@ namespace CSharpMongoMigrations.Demo
     }
 
 
-    [Migration(2, "Change property")]
+    [Migration(2, "Change property", "Persons")]
     public class ChangePropertyMigration : DocumentMigration
     {
         protected override string CollectionName { get { return "Persons"; } }
@@ -60,7 +60,7 @@ namespace CSharpMongoMigrations.Demo
         }
     }
 
-    [Migration(3, "Add type property")]
+    [Migration(3, "Add type property", "Persons")]
     public class AddTypePropertyMigration : DocumentMigration
     {
         protected override string CollectionName { get { return "Persons"; } }

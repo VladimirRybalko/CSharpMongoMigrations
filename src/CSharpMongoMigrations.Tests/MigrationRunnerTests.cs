@@ -11,7 +11,7 @@ namespace CSharpMongoMigrations.Tests
         {
             Assert.Throws<NullReferenceException>(() =>
             {
-                var runner = new MigrationRunner((MongoUrl)null, "test");
+                var runner = new MigrationRunner((MongoUrl)null, "test", "test");
             });
         }
 
@@ -20,7 +20,7 @@ namespace CSharpMongoMigrations.Tests
         {
             Assert.Throws<MongoConfigurationException>(() =>
             {
-                var runner = new MigrationRunner("test", "test");
+                var runner = new MigrationRunner("test", "test", "test");
             });
         }
     }

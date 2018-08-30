@@ -12,16 +12,19 @@ namespace CSharpMongoMigrations
     {
         private readonly IDatabaseMigrations _dbMigrations;
         private readonly IMigrationLocator _locator;
+        private readonly string _collectionName;
         private readonly string _migrationAssembly;
 
         /// <summary>
         /// Creates a new instance of MigrationRunner
         /// </summary>
         /// <param name="url">MongoDb connection string</param>
+        /// <param name="collectionName">MongoDb collection name</param>
         /// <param name="migrationAssembly">Assembly with migrations</param>
-        public MigrationRunner(MongoUrl url, string migrationAssembly)
+        public MigrationRunner(MongoUrl url, string collectionName, string migrationAssembly)
         {
             _dbMigrations = new DatabaseMigrations(url);
+            _collectionName = collectionName;
             _locator = new MigrationLocator(migrationAssembly, _dbMigrations.GetDatabase());
 
             _migrationAssembly = migrationAssembly;
@@ -31,9 +34,10 @@ namespace CSharpMongoMigrations
         /// Creates a new instance of MigrationRunner
         /// </summary>
         /// <param name="connectionString">connection string in common URL format</param>
+        /// <param name="collectionName">MongoDb collection name</param>
         /// <param name="migrationAssembly">Assembly containing migrations</param>
-        public MigrationRunner(string connectionString, string migrationAssembly) : 
-            this(MongoUrl.Create(connectionString), migrationAssembly)
+        public MigrationRunner(string connectionString, string collectionName, string migrationAssembly) : 
+            this(MongoUrl.Create(connectionString), collectionName, migrationAssembly)
         {
         }
 
@@ -42,9 +46,10 @@ namespace CSharpMongoMigrations
         /// </summary>
         /// <param name="server">MongoDb server</param>
         /// <param name="database">MongoDb database</param>
+        /// <param name="collectionName">MongoDb collection name</param>
         /// <param name="migrationAssembly">Assembly containing migrations</param>
-        public MigrationRunner(string server, string database, string migrationAssembly) :
-            this(MongoUrl.Create($"mongodb://{server}/{database}"), migrationAssembly)
+        public MigrationRunner(string server, string database, string collectionName, string migrationAssembly) :
+            this(BuildConnectionString(server, database), collectionName, migrationAssembly)
         {
         }
 
@@ -59,9 +64,9 @@ namespace CSharpMongoMigrations
 
             Console.WriteLine($"Discovering migrations in {_migrationAssembly}");
             
-            var appliedMigrations = _dbMigrations.GetAppliedMigrations();
+            var appliedMigrations = _dbMigrations.GetAppliedMigrations(this._collectionName);
             var inapplicableMigrations = 
-                _locator.GetMigrations(MigrationVersion.Min, new MigrationVersion(version))
+                _locator.GetMigrations(MigrationVersion.Min, new MigrationVersion(version), this._collectionName)
                 .Where(m => appliedMigrations.All(x => x.Version != m.Version.Version))
                 .ToList();
 
@@ -87,9 +92,9 @@ namespace CSharpMongoMigrations
         {
             Console.WriteLine($"Discovering migrations in {_migrationAssembly}");
 
-            var appliedMigrations = _dbMigrations.GetAppliedMigrations();
+            var appliedMigrations = _dbMigrations.GetAppliedMigrations(this._collectionName);
             var downgradedMigrations = 
-                _locator.GetMigrations(new MigrationVersion(version), MigrationVersion.Max)
+                _locator.GetMigrations(new MigrationVersion(version), MigrationVersion.Max, this._collectionName)
                 .Where(m => appliedMigrations.Any(x => x.Version == m.Version.Version))
                 .ToList();
 
@@ -104,6 +109,13 @@ namespace CSharpMongoMigrations
 
                 Console.WriteLine($"Applied: {migration.Version}");
             }
+        }
+
+        private static string BuildConnectionString(string server, string database)
+        {
+            var serverPart = server.StartsWith("mongodb://") ? server : $"mongodb://{server}";
+
+            return $"{serverPart}/{database}";
         }
     }
 }

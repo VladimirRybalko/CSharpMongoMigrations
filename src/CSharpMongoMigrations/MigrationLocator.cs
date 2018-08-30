@@ -15,9 +15,10 @@ namespace CSharpMongoMigrations
         /// Discovery all migrations in specified assembly between specified versions
         /// </summary>
         /// <param name="after">The lower limit of the search</param>
+        /// <param name="collectionName">The collection affected by the migration</param>
         /// <param name="before">The upper limit of the search</param>
         /// <returns></returns>
-        IEnumerable<VersionedMigration> GetMigrations(MigrationVersion after, MigrationVersion before);
+        IEnumerable<VersionedMigration> GetMigrations(MigrationVersion after, MigrationVersion before, string collectionName);
     }
 
     internal class MigrationLocator : IMigrationLocator
@@ -31,7 +32,7 @@ namespace CSharpMongoMigrations
             _database = database;
         }
 
-        public IEnumerable<VersionedMigration> GetMigrations(MigrationVersion after, MigrationVersion before)
+        public IEnumerable<VersionedMigration> GetMigrations(MigrationVersion after, MigrationVersion before, string collectionName)
         {
             var migrations =
                 (
@@ -39,8 +40,9 @@ namespace CSharpMongoMigrations
                     where typeof(IMigration).GetTypeInfo().IsAssignableFrom(type) && !type.GetTypeInfo().IsAbstract
                     let attribute = type.GetTypeInfo().GetCustomAttribute<MigrationAttribute>()
                     where attribute != null && after.Version < attribute.Version && attribute.Version <= before.Version
+                    where string.Compare(attribute.CollectionName, collectionName, StringComparison.OrdinalIgnoreCase) == 0
                     orderby attribute.Version
-                    select new { Migration = (IMigration)Activator.CreateInstance(type), Version = new MigrationVersion(attribute.Version, attribute.Description) }
+                    select new { Migration = (IMigration)Activator.CreateInstance(type), Version = new MigrationVersion(attribute.Version, attribute.Description, attribute.CollectionName) }
                 ).ToList();
 
             foreach (var m in migrations)
