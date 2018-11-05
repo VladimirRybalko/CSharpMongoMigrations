@@ -4,7 +4,7 @@
 
 ## What is it?
 
-**CSharpMongoMigrations** is an alternative .NET library for mongo migrations. Despite the official package allows both the *Up* and the *Down* data migrations. It's a big advantage for huge MongoDb projects. Moreover solution does not have any dependencies from the outdated MongoDb driver. So you don't need anymore to reference two different versions of the driver.
+**CSharpMongoMigrations** is an alternative .NET library for mongo migrations. Despite the official package allows for both the *Up* and the *Down* data migrations. It's a big advantage for huge MongoDb projects. Moreover solution does not have any dependencies from the outdated MongoDb driver. So you don't need to reference different driver versions anymore.
 
 
 ## Documentation API
