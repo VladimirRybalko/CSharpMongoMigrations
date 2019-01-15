@@ -70,7 +70,7 @@ You can find more detailed examples in *CSharpMongoMigrations.Demo* project.
 It's a really simple. You should create an instance of *MigrationRunner* class.
 
 ```csharp
-   var runner = new MigrationRunner("<mongoDb_connection_string>", "<database_name>", "<location_to_assembly_with_migrations>");
+   var runner = new MigrationRunner("<mongoDb_connection_string>", "<database_name>", "<full_name_of_assembly_with_migrations>");
 ```
 Then you can call *Up* or *Down* method to apply or downgrade migrations.
 
