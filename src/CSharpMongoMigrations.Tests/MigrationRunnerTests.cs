@@ -1,5 +1,6 @@
 ﻿using System;
 using MongoDB.Driver;
+using Moq;
 using Xunit;
 
 namespace CSharpMongoMigrations.Tests
@@ -11,7 +12,7 @@ namespace CSharpMongoMigrations.Tests
         {
             Assert.Throws<NullReferenceException>(() =>
             {
-                var runner = new MigrationRunner((MongoUrl)null, "test");
+                var runner = new MigrationRunner((MongoUrl)null, "test", new MigrationFactory());
             });
         }
 
@@ -20,7 +21,16 @@ namespace CSharpMongoMigrations.Tests
         {
             Assert.Throws<MongoConfigurationException>(() =>
             {
-                var runner = new MigrationRunner("test", "test");
+                var runner = new MigrationRunner("test", "test", new MigrationFactory());
+            });
+        }
+
+        [Fact]
+        public void ShouldNotCreateMigrationRunnerWithNullFactory()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                var runner = new MigrationRunner("mongodb://valid", "test", factory: null);
             });
         }
     }

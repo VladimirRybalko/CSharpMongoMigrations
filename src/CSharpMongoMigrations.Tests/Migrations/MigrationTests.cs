@@ -22,7 +22,7 @@ namespace CSharpMongoMigrations.Tests
         }
 
 
-        [Fact]        
+        [Fact]
         [Description("Check IDbMigration.UseDatabase method. It's used only for internal purpose.")]
         public void UseDatabaseFact()
         {

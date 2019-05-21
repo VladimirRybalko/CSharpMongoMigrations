@@ -6,7 +6,7 @@ namespace CSharpMongoMigrations.Demo
     {
         public static void Main(string[] args)
         {            
-            var runner = new MigrationRunner("mongodb://localhost:27017/TestMigrations", Assembly.GetExecutingAssembly().FullName);
+            var runner = new MigrationRunner("mongodb://localhost:27017/TestMigrations", Assembly.GetExecutingAssembly().FullName, new MigrationFactory());
             runner.Up();
         }
     }
