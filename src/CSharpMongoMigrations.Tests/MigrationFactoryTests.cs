@@ -23,7 +23,7 @@ namespace CSharpMongoMigrations.Tests
         }
 
         [Fact]
-        public void UseDatabaseFact()
+        public void UseActivatorToCreateFact()
         {
             // Arrange
             var factory = new MigrationFactory();
