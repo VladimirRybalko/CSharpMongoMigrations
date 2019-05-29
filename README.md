@@ -1,6 +1,6 @@
 # CSharpMongoMigrations
 
-[![NuGet](https://img.shields.io/badge/nuget-2.1.1-blue.svg)](https://www.nuget.org/packages/CSharpMongoMigrations/)
+[![NuGet](https://img.shields.io/badge/nuget-2.1.2-blue.svg)](https://www.nuget.org/packages/CSharpMongoMigrations/)
 
 ## What is it?
 
@@ -67,7 +67,7 @@ You can find more detailed examples in *CSharpMongoMigrations.Demo* project.
 
 
 ## How to launch migrations?
-It's a really simple. You should create an instance of *MigrationRunner* class.
+It's actually simple. You need to create an instance of *MigrationRunner* class.
 
 ```csharp
    var runner = new MigrationRunner("<mongoDb_connection_string>", "<database_name>", "<full_name_of_assembly_with_migrations>");
