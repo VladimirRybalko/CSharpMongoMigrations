@@ -19,12 +19,22 @@ namespace CSharpMongoMigrations
         /// </summary>
         /// <param name="url">MongoDb connection string</param>
         /// <param name="migrationAssembly">Assembly with migrations</param>
-        public MigrationRunner(MongoUrl url, string migrationAssembly)
+        /// <param name="factory">Factory responsible for instantiating migrations</param>
+        public MigrationRunner(MongoUrl url, string migrationAssembly, IMigrationFactory factory)
         {
             _dbMigrations = new DatabaseMigrations(url);
-            _locator = new MigrationLocator(migrationAssembly, _dbMigrations.GetDatabase());
-
+            _locator = new MigrationLocator(migrationAssembly, _dbMigrations.GetDatabase(), factory);
             _migrationAssembly = migrationAssembly;
+        }
+
+        /// <summary>
+        /// Creates a new instance of MigrationRunner
+        /// </summary>
+        /// <param name="url">MongoDb connection string</param>
+        /// <param name="migrationAssembly">Assembly with migrations</param>
+        public MigrationRunner(MongoUrl url, string migrationAssembly) :
+            this(url, migrationAssembly, new MigrationFactory())
+        {
         }
 
         /// <summary>
@@ -32,8 +42,31 @@ namespace CSharpMongoMigrations
         /// </summary>
         /// <param name="connectionString">connection string in common URL format</param>
         /// <param name="migrationAssembly">Assembly containing migrations</param>
-        public MigrationRunner(string connectionString, string migrationAssembly) : 
-            this(MongoUrl.Create(connectionString), migrationAssembly)
+        /// <param name="factory">Factory responsible for instantiating migrations</param>
+        public MigrationRunner(string connectionString, string migrationAssembly, IMigrationFactory factory) :
+            this(MongoUrl.Create(connectionString), migrationAssembly, factory)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new instance of MigrationRunner
+        /// </summary>
+        /// <param name="connectionString">connection string in common URL format</param>
+        /// <param name="migrationAssembly">Assembly containing migrations</param>
+        public MigrationRunner(string connectionString, string migrationAssembly) :
+            this(MongoUrl.Create(connectionString), migrationAssembly, new MigrationFactory())
+        {
+        }
+
+        /// <summary>
+        /// Creates a new instance of MigrationRunner
+        /// </summary>
+        /// <param name="server">MongoDb server</param>
+        /// <param name="database">MongoDb database</param>
+        /// <param name="migrationAssembly">Assembly containing migrations</param>
+        /// <param name="factory">Factory responsible for instantiating migrations</param>
+        public MigrationRunner(string server, string database, string migrationAssembly, IMigrationFactory factory) :
+            this(MongoUrl.Create($"mongodb://{server}/{database}"), migrationAssembly, factory)
         {
         }
 
@@ -44,7 +77,7 @@ namespace CSharpMongoMigrations
         /// <param name="database">MongoDb database</param>
         /// <param name="migrationAssembly">Assembly containing migrations</param>
         public MigrationRunner(string server, string database, string migrationAssembly) :
-            this(MongoUrl.Create($"mongodb://{server}/{database}"), migrationAssembly)
+            this(MongoUrl.Create($"mongodb://{server}/{database}"), migrationAssembly, new MigrationFactory())
         {
         }
 
@@ -58,19 +91,19 @@ namespace CSharpMongoMigrations
             version = version == -1 ? long.MaxValue : version;
 
             Console.WriteLine($"Discovering migrations in {_migrationAssembly}");
-            
+
             var appliedMigrations = _dbMigrations.GetAppliedMigrations();
-            var inapplicableMigrations = 
+            var inapplicableMigrations =
                 _locator.GetMigrations(MigrationVersion.Min, new MigrationVersion(version))
-                .Where(m => appliedMigrations.All(x => x.Version != m.Version.Version))
-                .ToList();
+                    .Where(m => appliedMigrations.All(x => x.Version != m.Version.Version))
+                    .ToList();
 
             Console.WriteLine($"Found ({inapplicableMigrations.Count}) migrations in {_migrationAssembly}");
 
             foreach (var migration in inapplicableMigrations)
             {
-                Console.WriteLine($"Applying: {migration.Version}"); 
-                            
+                Console.WriteLine($"Applying: {migration.Version}");
+
                 migration.Up();
                 _dbMigrations.ApplyMigration(migration.Version);
 
@@ -88,10 +121,10 @@ namespace CSharpMongoMigrations
             Console.WriteLine($"Discovering migrations in {_migrationAssembly}");
 
             var appliedMigrations = _dbMigrations.GetAppliedMigrations();
-            var downgradedMigrations = 
+            var downgradedMigrations =
                 _locator.GetMigrations(new MigrationVersion(version), MigrationVersion.Max)
-                .Where(m => appliedMigrations.Any(x => x.Version == m.Version.Version))
-                .ToList();
+                    .Where(m => appliedMigrations.Any(x => x.Version == m.Version.Version))
+                    .ToList();
 
             Console.WriteLine($"Found ({downgradedMigrations.Count}) migrations in {_migrationAssembly}");
 
