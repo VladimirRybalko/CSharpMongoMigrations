@@ -3,25 +3,35 @@
 namespace CSharpMongoMigrations
 {
     /// <summary>
-    /// Mark specified class as migration. Use for discovering migrations in assembly.
+    /// Mark specified class as a migration. Used to discover migrations in the target assembly.
     /// </summary>
-    /// <remarks>You must set attribute for each migration class because it uses to discover migrations in assembly</remarks>
     public class MigrationAttribute : Attribute
     {
-        public MigrationAttribute(long version, string description)
+        public MigrationAttribute(long version, string description = null)
+            : this(null, version, description)
         {
+        }
+
+        public MigrationAttribute(string collection, long version, string description = null)
+        {
+            Collection = collection;
             Version = version;
             Description = description;
         }
 
         /// <summary>
-        /// Migration version
+        /// The migration version.
         /// </summary>
         public long Version { get; private set; }
 
         /// <summary>
-        /// Migration description
+        /// The migration description.
         /// </summary>
         public string Description { get; private set; }
+
+        /// <summary>
+        /// The target collection for migration.
+        /// </summary>
+        public string Collection { get; private set; }
     }
 }

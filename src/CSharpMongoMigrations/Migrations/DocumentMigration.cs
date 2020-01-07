@@ -6,8 +6,8 @@ using System.Collections.Generic;
 namespace CSharpMongoMigrations
 {
     /// <summary>
-    /// Base class for document migration
-    /// Migrate each document in collection
+    /// The base class for a document migration
+    /// Migrate each document in target collection
     /// </summary>
     public abstract class DocumentMigration : Migration 
     {
@@ -45,13 +45,13 @@ namespace CSharpMongoMigrations
         }
 
         /// <summary>
-        /// Upgrade specified document
+        /// Upgrade the specified document
         /// </summary>
         /// <param name="document"></param>
         protected abstract void UpgradeDocument(BsonDocument document);
 
         /// <summary>
-        /// Downgrade specified document
+        /// Downgrade the specified document
         /// </summary>
         /// <param name="document"></param>
         protected abstract void DowngradeDocument(BsonDocument document);

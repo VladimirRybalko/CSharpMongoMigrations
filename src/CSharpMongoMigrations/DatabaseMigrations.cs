@@ -5,12 +5,12 @@ using System.Linq;
 namespace CSharpMongoMigrations
 {
     /// <summary>
-    /// Represent the existing database migrations and allow to apply new migrations 
+    /// Represent the existing database migrations and allow to apply new migrations.
     /// </summary>
-    /// <remarks>For internal using only</remarks>
+    /// <remarks>For internal usage only.</remarks>
     internal interface IDatabaseMigrations
     {
-        List<MigrationVersion> GetAppliedMigrations();
+        List<MigrationVersion> GetAppliedMigrations(string collection);
 
         void ApplyMigration(MigrationVersion version);
         void CancelMigration(MigrationVersion version);
@@ -29,10 +29,10 @@ namespace CSharpMongoMigrations
             _db = client.GetDatabase(url.DatabaseName);
         }
 
-        public List<MigrationVersion> GetAppliedMigrations()
+        public List<MigrationVersion> GetAppliedMigrations(string collection)
         {
            return _db.GetCollection<MigrationVersion>(_collectionName)
-                .FindAll()
+                .Find(x => string.IsNullOrEmpty(collection) || x.Collection == collection)
                 .SortByDescending(x => x.Version)
                 .ToList();
         }
@@ -49,7 +49,7 @@ namespace CSharpMongoMigrations
 
         public void CancelMigration(MigrationVersion version)
         {
-            _db.GetCollection<MigrationVersion>(_collectionName).DeleteOne(x => x.Version == version.Version);
+            _db.GetCollection<MigrationVersion>(_collectionName).DeleteOne(x => x.Version == version.Version && x.Collection == version.Collection);
         }
     }
 }

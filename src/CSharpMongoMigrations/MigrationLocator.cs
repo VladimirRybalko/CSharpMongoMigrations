@@ -12,10 +12,10 @@ namespace CSharpMongoMigrations
     internal interface IMigrationLocator
     {
         /// <summary>
-        /// Discovery all migrations in specified assembly between specified versions
+        /// Discovery all migrations in the specified assembly in the current version's range.
         /// </summary>
-        /// <param name="after">The lower limit of the search</param>
-        /// <param name="before">The upper limit of the search</param>
+        /// <param name="after">The lower limit of the search.</param>
+        /// <param name="before">The upper limit of the search.</param>
         /// <returns></returns>
         IEnumerable<VersionedMigration> GetMigrations(MigrationVersion after, MigrationVersion before);
     }
@@ -35,14 +35,18 @@ namespace CSharpMongoMigrations
 
         public IEnumerable<VersionedMigration> GetMigrations(MigrationVersion after, MigrationVersion before)
         {
+            if (!string.Equals(after.Collection, before.Collection))
+                throw new ArgumentException("Cannot apply cross collections migrations");
+
             var migrations =
             (
                 from type in _assembly.GetTypes()
                 where typeof(IMigration).GetTypeInfo().IsAssignableFrom(type) && !type.GetTypeInfo().IsAbstract
                 let attribute = type.GetTypeInfo().GetCustomAttribute<MigrationAttribute>()
-                where attribute != null && after.Version < attribute.Version && attribute.Version <= before.Version
-                orderby attribute.Version
-                select new { Migration = _factory.Create(type), Version = new MigrationVersion(attribute.Version, attribute.Description) }
+                where attribute != null 
+                    && (string.IsNullOrEmpty(after.Collection) || string.Equals(attribute.Collection, after.Collection))
+                    && after.Version < attribute.Version && attribute.Version <= before.Version
+                select new { Migration = _factory.Create(type), Version = new MigrationVersion(attribute.Collection, attribute.Version, attribute.Description) }
             ).ToList();
 
             foreach (var m in migrations)

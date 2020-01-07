@@ -7,33 +7,56 @@ namespace CSharpMongoMigrations
     /// </summary>
     public class MigrationVersion
     {
-        public static MigrationVersion Min = new MigrationVersion(-1);
-        public static MigrationVersion Max = new MigrationVersion(long.MaxValue);
+        /// <summary>
+        /// Get a minimum migration version for the specified collection.
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <returns></returns>
+        public static MigrationVersion Min(string collection) => new MigrationVersion(collection, -1);
 
+        /// <summary>
+        /// Get a maximum migration version for the specified collection.
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <returns></returns>
+        public static MigrationVersion Max(string collection) => new MigrationVersion(collection, long.MaxValue);
+
+        /// <summary>
+        /// The unique identifier of the current migration.
+        /// </summary>
         public Guid Id { get; } = Guid.NewGuid();
 
         /// <summary>
-        /// Sequence number of the current migration
+        /// Sequence number of the current migration.
         /// </summary>
         public long Version { get; private set; }
 
         /// <summary>
-        /// Text description of the current migration
+        /// Text description of the current migration.
         /// </summary>
-        public string Description { get; private set;}
-                
-        public MigrationVersion(long version)
-            : this(version, null) { }
+        public string Description { get; private set; }
 
-        public MigrationVersion(long version, string description)
+        /// <summary>
+        /// The collection name the current migration applies for.
+        /// </summary>
+        public string Collection { get; private set; }
+
+        public MigrationVersion(long version)
+            : this(null, version) { }
+
+        public MigrationVersion(string collection, long version)
+            : this(collection, version, null) { }
+
+        public MigrationVersion(string collection, long version, string description)
         {
+            Collection = collection;
             Version = version;
             Description = description;
         }
 
         public override string ToString()
         {
-            return $"[{Version}] {Description}";
+            return $"[{Collection}: {Version}] {Description}";
         }
     }
 }

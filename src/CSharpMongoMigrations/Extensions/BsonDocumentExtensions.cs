@@ -4,16 +4,16 @@ using System;
 namespace CSharpMongoMigrations
 {
     /// <summary>
-    /// Bson document custom extensions
+    /// Defines bson document custom extensions
     /// </summary>
     public static class BsonDocumentExtensions
     {
         /// <summary>
-        /// Rename a document property
+        /// Rename a document property.
         /// </summary>
-        /// <param name="document">The target document</param>
-        /// <param name="oldName">The old property name</param>
-        /// <param name="newName">The new property name</param>
+        /// <param name="document">The target document.</param>
+        /// <param name="oldName">The old property name.</param>
+        /// <param name="newName">The new property name.</param>
         public static void RenameProperty(this BsonDocument document, string oldName, string newName)
         {
             var old = document.GetElement(oldName);
@@ -24,21 +24,21 @@ namespace CSharpMongoMigrations
         }
 
         /// <summary>
-        /// Remove property from document
+        /// Remove a property from the document.
         /// </summary>
-        /// <param name="document">The target document</param>
-        /// <param name="property">The property name</param>
+        /// <param name="document">The target document.</param>
+        /// <param name="property">The desired property name.</param>
         public static void RemoveProperty(this BsonDocument document, string property)
         {
             document.Remove(property);
         }
 
         /// <summary>
-        /// Add new property to document
+        /// Add new property to the document.
         /// </summary>
-        /// <param name="document">The target document</param>
-        /// <param name="property">The property name</param>
-        /// <param name="value">The property value</param>
+        /// <param name="document">The target document.</param>
+        /// <param name="property">The desired property name.</param>
+        /// <param name="value">The desired property value.</param>
         public static void AddProperty(this BsonDocument document, string property, object value)
         {
             var element = new BsonElement(property, BsonValue.Create(value));
@@ -47,21 +47,21 @@ namespace CSharpMongoMigrations
 
 
         /// <summary>
-        /// Add the unique identifier for document
+        /// Add the unique identifier to the document.
         /// </summary>
-        /// <param name="document">The target document</param>
-        /// <param name="value">Unique identifier value</param>
-        /// <remarks>Id is always Guid value by convention</remarks>
+        /// <param name="document">The target document.</param>
+        /// <param name="value">An unique identifier value.</param>
+        /// <remarks>Id is always a Guid value by convention.</remarks>
         public static void AddUniqueIdentifier(this BsonDocument document, Guid value)
         {
             document.AddProperty("_id", value);
         }
 
         /// <summary>
-        /// Change property value
+        /// Change the property value.
         /// </summary>
-        /// <param name="document">The target document</param>
-        /// <param name="property">The property name</param>
+        /// <param name="document">The target document.</param>
+        /// <param name="property">The desired property name.</param>
         /// <param name="value"></param>
         public static void ChangeValue(this BsonDocument document, string property, object value)
         {

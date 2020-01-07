@@ -6,12 +6,12 @@ using System.Runtime.CompilerServices;
 namespace CSharpMongoMigrations
 {
     /// <summary>
-    /// Represent mongo database migration
+    /// Represent a mongo database migration
     /// </summary>
     internal interface IDbMigration : IMigration
     {
         /// <summary>
-        /// Set a mongo database for migration
+        /// Set a mongo database to the current migration
         /// </summary>
         /// <param name="database"></param>
         void UseDatabase(IMongoDatabase database);

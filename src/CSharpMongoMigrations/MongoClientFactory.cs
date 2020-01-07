@@ -4,8 +4,8 @@ using System.Collections.Generic;
 namespace CSharpMongoMigrations
 {
     /// <summary>
-    /// Helper factory for storing connection to mongo database
-    /// Preventing creation of multiple connections for the same mongo database
+    /// The helper factory to store a connection to the mongo database.
+    /// Preventing creation of multiple connections for the same mongo database.
     /// </summary>
     internal class MongoClientFactory
     {

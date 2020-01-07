@@ -4,15 +4,15 @@ using MongoDB.Driver;
 namespace CSharpMongoMigrations
 {
     /// <summary>
-    /// Mongo collection extensions
+    /// Provides mongo collection extensions.
     /// </summary>
     public static class MongoCollectionExtensions
     {
         /// <summary>
-        /// Update document in specified collection
+        /// Update a document in the specified collection.
         /// </summary>
-        /// <param name="collection"></param>
-        /// <param name="document">Document for updating</param>
+        /// <param name="collection">The target collection.</param>
+        /// <param name="document">The desired document for updating.</param>
         public static void Update(this IMongoCollection<BsonDocument> collection, BsonDocument document)
         {
             var idFilter = Builders<BsonDocument>.Filter.Eq("_id", document.GetValue("_id").AsGuid);            
@@ -20,10 +20,10 @@ namespace CSharpMongoMigrations
         }
 
         /// <summary>
-        /// Find all document in specified collection
+        /// Find all documents in the specified collection.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="collection"></param>
+        /// <typeparam name="T">Document type.</typeparam>
+        /// <param name="collection">The target collection.</param>
         /// <returns></returns>
         public static IFindFluent<T, T> FindAll<T>(this IMongoCollection<T> collection)
         {

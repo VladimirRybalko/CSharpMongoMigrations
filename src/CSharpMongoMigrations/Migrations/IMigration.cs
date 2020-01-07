@@ -1,17 +1,17 @@
 ﻿namespace CSharpMongoMigrations
 {
     /// <summary>
-    /// Mongo migration
+    /// Define a Mongo migration.
     /// </summary>
     public interface IMigration
     {
         /// <summary>
-        /// Execute migration up
+        /// Execute migration up.
         /// </summary>
         void Up();
 
         /// <summary>
-        /// Execute migration down
+        /// Execute migration down.
         /// </summary>
         void Down();
     }

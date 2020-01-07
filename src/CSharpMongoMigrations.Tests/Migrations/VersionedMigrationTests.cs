@@ -26,7 +26,7 @@ namespace CSharpMongoMigrations.Tests
             // Arrange
             var migration = new Mock<IMigration>();
             migration.Setup(x => x.Up());
-            var versionedMigration = new VersionedMigration(migration.Object, MigrationVersion.Max);
+            var versionedMigration = new VersionedMigration(migration.Object, MigrationVersion.Max(null));
 
             // Act
             versionedMigration.Up();
@@ -42,7 +42,7 @@ namespace CSharpMongoMigrations.Tests
             var migration = new Mock<IMigration>();
             migration.Setup(x => x.Down());
             var version = AutoFixture.Long();
-            var versionedMigration = new VersionedMigration(migration.Object, MigrationVersion.Min);
+            var versionedMigration = new VersionedMigration(migration.Object, MigrationVersion.Min(null));
 
             // Act
             versionedMigration.Down();
