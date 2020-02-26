@@ -16,7 +16,7 @@ namespace CSharpMongoMigrations.Tests
             var document = new BsonDocument(new BsonElement("_id", Guid.NewGuid()));
             var mockCollection = new Mock<IMongoCollection<BsonDocument>>();
 
-            mockCollection.Setup(x => x.ReplaceOne(It.IsAny<FilterDefinition<BsonDocument>>(), document, It.IsAny<UpdateOptions>(), It.IsAny<CancellationToken>()));
+            mockCollection.Setup(x => x.ReplaceOne(It.IsAny<FilterDefinition<BsonDocument>>(), document, It.IsAny<ReplaceOptions>(), It.IsAny<CancellationToken>()));
                        
 
             // Act
