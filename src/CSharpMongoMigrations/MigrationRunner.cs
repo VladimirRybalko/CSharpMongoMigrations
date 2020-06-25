@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using MongoDB.Driver;
 
 namespace CSharpMongoMigrations
@@ -11,7 +12,18 @@ namespace CSharpMongoMigrations
     {
         private readonly IDatabaseMigrations _dbMigrations;
         private readonly IMigrationLocator _locator;
-        private readonly string _migrationAssembly;
+
+        /// <summary>
+        /// Creates a new instance of <seealso cref="MigrationRunner" />
+        /// </summary>
+        /// <param name="url">A MongoDb connection string.</param>
+        /// <param name="migrationAssemblyName">The target assembly containing migrations.</param>
+        /// <param name="factory">The factory that's responsible for instantiating migrations.</param>
+        public MigrationRunner(MongoUrl url, string migrationAssemblyName, IMigrationFactory factory)
+        {
+            _dbMigrations = new DatabaseMigrations(url);
+            _locator = new MigrationLocator(migrationAssemblyName, _dbMigrations.GetDatabase(), factory);
+        }
 
         /// <summary>
         /// Creates a new instance of <seealso cref="MigrationRunner" />
@@ -19,20 +31,20 @@ namespace CSharpMongoMigrations
         /// <param name="url">A MongoDb connection string.</param>
         /// <param name="migrationAssembly">The target assembly containing migrations.</param>
         /// <param name="factory">The factory that's responsible for instantiating migrations.</param>
-        public MigrationRunner(MongoUrl url, string migrationAssembly, IMigrationFactory factory)
+        public MigrationRunner(MongoUrl url, Assembly migrationAssembly, IMigrationFactory factory)
         {
             _dbMigrations = new DatabaseMigrations(url);
             _locator = new MigrationLocator(migrationAssembly, _dbMigrations.GetDatabase(), factory);
-            _migrationAssembly = migrationAssembly;
         }
+
 
         /// <summary>
         /// Creates a new instance of  <seealso cref="MigrationRunner" />
         /// </summary>
         /// <param name="url">A MongoDb connection string.</param>
-        /// <param name="migrationAssembly">The target assembly containing migrations.</param>
-        public MigrationRunner(MongoUrl url, string migrationAssembly) :
-            this(url, migrationAssembly, new MigrationFactory())
+        /// <param name="migrationAssemblyName">The target assembly containing migrations.</param>
+        public MigrationRunner(MongoUrl url, string migrationAssemblyName) :
+            this(url, migrationAssemblyName, new MigrationFactory())
         {
         }
 
@@ -40,10 +52,20 @@ namespace CSharpMongoMigrations
         /// Creates a new instance of <seealso cref="MigrationRunner" />
         /// </summary>
         /// <param name="connectionString">The Mongo connection string in common URL format.</param>
-        /// <param name="migrationAssembly">The target assembly containing migrations.</param>
+        /// <param name="migrationAssemblyName">The target assembly containing migrations.</param>
         /// <param name="factory">The factory that's responsible for instantiating migrations.</param>
-        public MigrationRunner(string connectionString, string migrationAssembly, IMigrationFactory factory) :
-            this(MongoUrl.Create(connectionString), migrationAssembly, factory)
+        public MigrationRunner(string connectionString, string migrationAssemblyName, IMigrationFactory factory) :
+            this(MongoUrl.Create(connectionString), migrationAssemblyName, factory)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new instance of <seealso cref="MigrationRunner" />
+        /// </summary>
+        /// <param name="connectionString">The Mongo connection string in common URL format.</param>
+        /// <param name="migrationAssemblyName">The target assembly containing migrations.</param>
+        public MigrationRunner(string connectionString, string migrationAssemblyName) :
+            this(MongoUrl.Create(connectionString), migrationAssemblyName, new MigrationFactory())
         {
         }
 
@@ -52,7 +74,7 @@ namespace CSharpMongoMigrations
         /// </summary>
         /// <param name="connectionString">The Mongo connection string in common URL format.</param>
         /// <param name="migrationAssembly">The target assembly containing migrations.</param>
-        public MigrationRunner(string connectionString, string migrationAssembly) :
+        public MigrationRunner(string connectionString, Assembly migrationAssembly) :
             this(MongoUrl.Create(connectionString), migrationAssembly, new MigrationFactory())
         {
         }
@@ -100,7 +122,7 @@ namespace CSharpMongoMigrations
         {
             version = version == -1 ? long.MaxValue : version;
 
-            Console.WriteLine($"Discovering migrations in {_migrationAssembly}");
+            Console.WriteLine($"Discovering migrations in {_locator.LocatedAssembly.FullName}");
 
             var appliedMigrations = _dbMigrations.GetAppliedMigrations(collection);
             var inapplicableMigrations =
@@ -110,7 +132,7 @@ namespace CSharpMongoMigrations
                     .ThenBy(x => x.Version.Version)
                     .ToList();
 
-            Console.WriteLine($"Found ({inapplicableMigrations.Count}) migrations in {_migrationAssembly}");
+            Console.WriteLine($"Found ({inapplicableMigrations.Count}) migrations in {_locator.LocatedAssembly.FullName}");
 
             foreach (var migration in inapplicableMigrations)
             {
@@ -141,7 +163,7 @@ namespace CSharpMongoMigrations
         /// <param name="version">The desired migration version.</param>
         public void Down(string collection, long version = -1)
         {
-            Console.WriteLine($"Discovering migrations in {_migrationAssembly}");
+            Console.WriteLine($"Discovering migrations in {_locator.LocatedAssembly.FullName}");
 
             var appliedMigrations = _dbMigrations.GetAppliedMigrations(collection);
             var downgradedMigrations =
@@ -151,7 +173,7 @@ namespace CSharpMongoMigrations
                     .ThenByDescending(x => x.Version.Version)
                     .ToList();
 
-            Console.WriteLine($"Found ({downgradedMigrations.Count}) migrations in {_migrationAssembly}");
+            Console.WriteLine($"Found ({downgradedMigrations.Count}) migrations in {_locator.LocatedAssembly.FullName}");
 
             foreach (var migration in downgradedMigrations)
             {

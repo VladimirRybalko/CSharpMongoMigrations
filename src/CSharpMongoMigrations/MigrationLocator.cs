@@ -18,20 +18,27 @@ namespace CSharpMongoMigrations
         /// <param name="before">The upper limit of the search.</param>
         /// <returns></returns>
         IEnumerable<VersionedMigration> GetMigrations(MigrationVersion after, MigrationVersion before);
+
+        Assembly LocatedAssembly { get; }
     }
 
     internal class MigrationLocator : IMigrationLocator
     {
-        private readonly Assembly _assembly;
         private readonly IMongoDatabase _database;
         private readonly IMigrationFactory _factory;
 
         public MigrationLocator(string assemblyName, IMongoDatabase database, IMigrationFactory factory)
+        : this(Assembly.Load(new AssemblyName(assemblyName)), database, factory)
         {
-            _assembly = Assembly.Load(new AssemblyName(assemblyName));
+        }
+
+        public MigrationLocator(Assembly locatedAssembly, IMongoDatabase database, IMigrationFactory factory)
+        {
+            LocatedAssembly = locatedAssembly;
             _database = database;
             _factory = factory ?? throw new ArgumentNullException(nameof(factory));
         }
+        public Assembly LocatedAssembly { get; }
 
         public IEnumerable<VersionedMigration> GetMigrations(MigrationVersion after, MigrationVersion before)
         {
@@ -40,7 +47,7 @@ namespace CSharpMongoMigrations
 
             var migrations =
             (
-                from type in _assembly.GetTypes()
+                from type in LocatedAssembly.GetTypes()
                 where typeof(IMigration).GetTypeInfo().IsAssignableFrom(type) && !type.GetTypeInfo().IsAbstract
                 let attribute = type.GetTypeInfo().GetCustomAttribute<MigrationAttribute>()
                 where attribute != null 
