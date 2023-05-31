@@ -5,9 +5,11 @@ namespace CSharpMongoMigrations.Demo
     public class Runner
     {
         public static void Main(string[] args)
-        {            
-            var runner = new MigrationRunner("mongodb://localhost:27017/TestMigrations", Assembly.GetExecutingAssembly().FullName, new MigrationFactory());
-            
+        {
+            var runner = new MigrationRunner("mongodb://localhost:27017/TestMigrations",
+                Assembly.GetExecutingAssembly().FullName,
+                new MigrationFactory());
+
             // Run all collection specific migrations
             runner.Up("Animals");
 
@@ -19,6 +21,20 @@ namespace CSharpMongoMigrations.Demo
 
             // Roll back all applied migrations
             runner.Down();
+
+
+
+            // Run/Stop conditional migration. 
+            var customRunner = new MigrationRunner("mongodb://localhost:27017/TestMigrations",
+                Assembly.GetExecutingAssembly().FullName,
+                new CustomMigrationFactory());
+
+            // Run all existing migrations
+            customRunner.Up();
+
+            // Roll back all applied migrations
+            customRunner.Down();
+
         }
     }
 }

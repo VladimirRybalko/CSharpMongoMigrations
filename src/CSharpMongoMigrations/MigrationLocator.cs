@@ -54,7 +54,7 @@ namespace CSharpMongoMigrations
                     && (string.IsNullOrEmpty(after.Collection) || string.Equals(attribute.Collection, after.Collection))
                     && after.Version < attribute.Version && attribute.Version <= before.Version
                 select new { Migration = _factory.Create(type), Version = new MigrationVersion(attribute.Collection, attribute.Version, attribute.Description) }
-            ).ToList();
+            ).Where(migration => migration.Migration != null).ToList();
 
             foreach (var m in migrations)
                 ((IDbMigration)m.Migration).UseDatabase(_database);
