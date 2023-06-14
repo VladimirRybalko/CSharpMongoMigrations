@@ -21,20 +21,6 @@ namespace CSharpMongoMigrations.Demo
 
             // Roll back all applied migrations
             runner.Down();
-
-
-
-            // Run/Stop conditional migration. 
-            var customRunner = new MigrationRunner("mongodb://localhost:27017/TestMigrations",
-                Assembly.GetExecutingAssembly().FullName,
-                new CustomMigrationFactory());
-
-            // Run all existing migrations
-            customRunner.Up();
-
-            // Roll back all applied migrations
-            customRunner.Down();
-
         }
     }
 }

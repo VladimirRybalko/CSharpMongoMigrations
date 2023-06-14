@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using CSharpMongoMigrations.Migrations;
+using FluentAssertions;
 using MongoDB.Driver;
 using Moq;
 using System.ComponentModel;
@@ -19,6 +20,16 @@ namespace CSharpMongoMigrations.Tests
             public override void Up()
             {
             }
+
+            public override bool ShouldUp()
+            {
+                return false;
+            }
+
+            public override bool ShouldDown()
+            {
+                return true;
+            }
         }
 
 
@@ -35,6 +46,21 @@ namespace CSharpMongoMigrations.Tests
 
             // Assert
             migration.Db.Should().Be(db.Object);
+        }
+
+        [Fact]
+        public void ConditionalMigrstionFact()
+        {
+            // Arrange
+            var migration = new MigrationStub();
+
+            // Act
+            var upResult = ((IConditionalMigration)migration).ShouldUp();
+            var downResult = ((IConditionalMigration)migration).ShouldDown();
+
+            // Assert
+            upResult.Should().Be(false);
+            downResult.Should().Be(true);
         }
     }
 }

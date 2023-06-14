@@ -24,5 +24,11 @@ namespace CSharpMongoMigrations.Demo.Migrations
             var idFilter = Builders<BsonDocument>.Filter.Eq("_id", new Guid("20C2CAC4-C55D-4C5C-8937-33698A3EC6C7"));
             collection.DeleteOne(idFilter);
         }
+
+        // Check your condition
+        public override bool ShouldUp()
+        {
+            return false;
+        }
     }
 }
