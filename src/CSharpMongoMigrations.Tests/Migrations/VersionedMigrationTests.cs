@@ -1,5 +1,4 @@
-﻿using CSharpMongoMigrations.Migrations;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Moq;
 using Xunit;
 
@@ -11,13 +10,11 @@ namespace CSharpMongoMigrations.Tests
         public void CtsFact()
         {
             // Arrange
-            var migration = new Mock<IMigration>();
-            var conditionalMigration = new Mock<IConditionalMigration>();
+            var migration = new Mock<IMigration>();            
             var version = AutoFixture.Long();
 
             // Act
-            var versionedMigration = new VersionedMigration(migration.Object, new MigrationVersion(version),
-                conditionalMigration.Object);
+            var versionedMigration = new VersionedMigration(migration.Object, new MigrationVersion(version));
 
             // Assert
             versionedMigration.Version.Version.Should().Be(version);
@@ -28,10 +25,8 @@ namespace CSharpMongoMigrations.Tests
         {
             // Arrange
             var migration = new Mock<IMigration>();
-            var conditionalMigration = new Mock<IConditionalMigration>();
             migration.Setup(x => x.Up());
-            var versionedMigration = new VersionedMigration(migration.Object, MigrationVersion.Max(null),
-                conditionalMigration.Object);
+            var versionedMigration = new VersionedMigration(migration.Object, MigrationVersion.Max(null));
 
             // Act
             versionedMigration.Up();
@@ -45,11 +40,9 @@ namespace CSharpMongoMigrations.Tests
         {
             // Arrange
             var migration = new Mock<IMigration>();
-            var conditionalMigration = new Mock<IConditionalMigration>();
             migration.Setup(x => x.Down());
             var version = AutoFixture.Long();
-            var versionedMigration = new VersionedMigration(migration.Object, MigrationVersion.Min(null),
-                conditionalMigration.Object);
+            var versionedMigration = new VersionedMigration(migration.Object, MigrationVersion.Min(null));
 
             // Act
             versionedMigration.Down();
@@ -63,16 +56,14 @@ namespace CSharpMongoMigrations.Tests
         {
             // Arrange
             var migration = new Mock<IMigration>();
-            var conditionalMigration = new Mock<IConditionalMigration>();
-            conditionalMigration.Setup(x => x.ShouldUp());
-            var versionedMigration = new VersionedMigration(migration.Object, MigrationVersion.Min(null),
-                conditionalMigration.Object);
+            migration.Setup(x => x.ShouldUp());
+            var versionedMigration = new VersionedMigration(migration.Object, MigrationVersion.Min(null));
 
             // Act
             versionedMigration.ShouldUp();
 
             // Assert
-            conditionalMigration.VerifyAll();
+            migration.VerifyAll();
         }
 
         [Fact]
@@ -80,16 +71,14 @@ namespace CSharpMongoMigrations.Tests
         {
             // Arrange
             var migration = new Mock<IMigration>();
-            var conditionalMigration = new Mock<IConditionalMigration>();
-            conditionalMigration.Setup(x => x.ShouldDown());
-            var versionedMigration = new VersionedMigration(migration.Object, MigrationVersion.Min(null),
-                conditionalMigration.Object);
+            migration.Setup(x => x.ShouldDown());
+            var versionedMigration = new VersionedMigration(migration.Object, MigrationVersion.Min(null));
 
             // Act
             versionedMigration.ShouldDown();
 
             // Assert
-            conditionalMigration.VerifyAll();
+            migration.VerifyAll();
         }
     }
 }

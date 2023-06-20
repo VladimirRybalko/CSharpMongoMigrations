@@ -1,5 +1,4 @@
-﻿using CSharpMongoMigrations.Migrations;
-using MongoDB.Driver;
+﻿using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,9 +59,7 @@ namespace CSharpMongoMigrations
             foreach (var m in migrations)
                 ((IDbMigration)m.Migration).UseDatabase(_database);
 
-            return migrations.Select(x => new VersionedMigration(x.Migration,
-                x.Version,
-                x.Migration as IConditionalMigration));
+            return migrations.Select(x => new VersionedMigration(x.Migration, x.Version));
         }
     }
 }

@@ -1,20 +1,15 @@
-﻿using CSharpMongoMigrations.Migrations;
-
-namespace CSharpMongoMigrations
+﻿namespace CSharpMongoMigrations
 {
     internal class VersionedMigration : IMigration
     {
-        private readonly IMigration _migration;
-        private readonly IConditionalMigration _conditionalMigration;
+        private readonly IMigration _migration;        
 
         public MigrationVersion Version { get; private set; }
 
-        public VersionedMigration(IMigration migration, MigrationVersion version,
-            IConditionalMigration conditionalMigration)
+        public VersionedMigration(IMigration migration, MigrationVersion version)
         {
             _migration = migration;
-            Version = version;
-            _conditionalMigration = conditionalMigration;
+            Version = version;            
         }
 
         public void Down()
@@ -29,12 +24,12 @@ namespace CSharpMongoMigrations
 
         public bool ShouldUp()
         {
-            return _conditionalMigration.ShouldUp();
+            return _migration.ShouldUp();
         }
 
         public bool ShouldDown()
         {
-            return _conditionalMigration.ShouldDown();
+            return _migration.ShouldDown();
         }
     }
 }

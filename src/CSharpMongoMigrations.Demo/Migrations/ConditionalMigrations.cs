@@ -28,6 +28,12 @@ namespace CSharpMongoMigrations.Demo.Migrations
         // Check your condition
         public override bool ShouldUp()
         {
+            return true;
+        }
+
+        // Check your condition
+        public override bool ShouldDown()
+        {
             return false;
         }
     }
