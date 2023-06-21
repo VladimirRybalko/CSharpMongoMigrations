@@ -10,7 +10,7 @@ namespace CSharpMongoMigrations.Tests
         public void CtsFact()
         {
             // Arrange
-            var migration = new Mock<IMigration>();            
+            var migration = new Mock<IMigration>();
             var version = AutoFixture.Long();
 
             // Act

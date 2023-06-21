@@ -2,14 +2,14 @@
 {
     internal class VersionedMigration : IMigration
     {
-        private readonly IMigration _migration;        
+        private readonly IMigration _migration;
 
         public MigrationVersion Version { get; private set; }
 
         public VersionedMigration(IMigration migration, MigrationVersion version)
         {
             _migration = migration;
-            Version = version;            
+            Version = version;
         }
 
         public void Down()
