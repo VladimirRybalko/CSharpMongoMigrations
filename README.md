@@ -91,6 +91,46 @@ These migrations allow to apply changes to each collection separately from anoth
 ```
 Here, the *Migration* attribute defines the target collection name and the specific migration version for the predefined collection. It helps us to apply migration to a specific schema.
 
+4) **Conditional migration**
+
+These migrations allow to skip specific migration based on defined condition.
+```csharp
+    [Migration(4, "Add Migration when condition meets")]
+    public sealed class ConditionalMigrations : Migration
+    {
+        public override void Up()
+        {
+            var collection = GetCollection("Persons");
+            var document = new BsonDocument();
+
+            document.AddUniqueIdentifier(new Guid("20C2CAC4-C55D-4C5C-8937-33698A3EC6C7"));
+            document.AddProperty("Name", "John Doe - Conditional");
+
+            collection.InsertOne(document);
+        }
+
+        public override void Down()
+        {
+            var collection = GetCollection("Persons");
+            var idFilter = Builders<BsonDocument>.Filter.Eq("_id", new Guid("20C2CAC4-C55D-4C5C-8937-33698A3EC6C7"));
+            collection.DeleteOne(idFilter);
+        }
+
+        // Check your condition
+        public override bool ShouldUp()
+        {
+            return true;
+        }
+
+        // Check your condition
+        public override bool ShouldDown()
+        {
+            return false;
+        }
+    }
+```
+
+Here, the *ShouldUp* and *ShouldDown* overridable methods allow you to check custom conditions to apply or skip migrations.
 
 You can also find more detailed examples in the *CSharpMongoMigrations.Demo* project.
 

@@ -19,6 +19,16 @@ namespace CSharpMongoMigrations.Tests
             public override void Up()
             {
             }
+
+            public override bool ShouldUp()
+            {
+                return false;
+            }
+
+            public override bool ShouldDown()
+            {
+                return false;
+            }
         }
 
 

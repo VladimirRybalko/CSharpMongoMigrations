@@ -17,10 +17,13 @@ namespace CSharpMongoMigrations
         
         public abstract void Up();
         public abstract void Down();
-        
+        public virtual bool ShouldUp() => true;
+        public virtual bool ShouldDown() => true;
+
+
         protected IMongoCollection<BsonDocument> GetCollection(string name)
         {
             return Database.GetCollection<BsonDocument>(name);
-        }       
+        }      
     }
 }

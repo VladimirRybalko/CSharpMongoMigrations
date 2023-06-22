@@ -136,12 +136,19 @@ namespace CSharpMongoMigrations
 
             foreach (var migration in inapplicableMigrations)
             {
-                Console.WriteLine($"Applying: {migration.Version}");
+                if (migration.ShouldUp())
+                {
+                    Console.WriteLine($"Applying: {migration.Version}");
 
-                migration.Up();
-                _dbMigrations.ApplyMigration(migration.Version);
+                    migration.Up();
+                    _dbMigrations.ApplyMigration(migration.Version);
 
-                Console.WriteLine($"Applied: {migration.Version}");
+                    Console.WriteLine($"Applied: {migration.Version}");
+                }
+                else
+                {
+                    Console.WriteLine($"Skipped: {migration.Version}");
+                }
             }
         }
 
@@ -177,12 +184,19 @@ namespace CSharpMongoMigrations
 
             foreach (var migration in downgradedMigrations)
             {
-                Console.WriteLine($"Applying: {migration.Version}");
+                if (migration.ShouldDown())
+                {
+                    Console.WriteLine($"Applying: {migration.Version}");
 
-                migration.Down();
-                _dbMigrations.CancelMigration(migration.Version);
+                    migration.Down();
+                    _dbMigrations.CancelMigration(migration.Version);
 
-                Console.WriteLine($"Applied: {migration.Version}");
+                    Console.WriteLine($"Applied: {migration.Version}");
+                }
+                else
+                {
+                    Console.WriteLine($"Skipped: {migration.Version}");
+                }
             }
         }
     }

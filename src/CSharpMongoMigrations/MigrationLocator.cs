@@ -50,7 +50,7 @@ namespace CSharpMongoMigrations
                 from type in LocatedAssembly.GetTypes()
                 where typeof(IMigration).GetTypeInfo().IsAssignableFrom(type) && !type.GetTypeInfo().IsAbstract
                 let attribute = type.GetTypeInfo().GetCustomAttribute<MigrationAttribute>()
-                where attribute != null 
+                where attribute != null
                     && (string.IsNullOrEmpty(after.Collection) || string.Equals(attribute.Collection, after.Collection))
                     && after.Version < attribute.Version && attribute.Version <= before.Version
                 select new { Migration = _factory.Create(type), Version = new MigrationVersion(attribute.Collection, attribute.Version, attribute.Description) }
