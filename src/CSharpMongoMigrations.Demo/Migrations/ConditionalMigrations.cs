@@ -4,7 +4,7 @@ using System;
 
 namespace CSharpMongoMigrations.Demo.Migrations
 {
-    [Migration(4, "Add Migration when condition meets")]
+    [Migration(4, "Add Migration when condition is met")]
     public sealed class ConditionalMigrations : Migration
     {
         public override void Up()
@@ -25,16 +25,8 @@ namespace CSharpMongoMigrations.Demo.Migrations
             collection.DeleteOne(idFilter);
         }
 
-        // Check your condition
-        public override bool ShouldUp()
-        {
-            return true;
-        }
+        public override bool ShouldUp() => true;
 
-        // Check your condition
-        public override bool ShouldDown()
-        {
-            return false;
-        }
+        public override bool ShouldDown() => false;
     }
 }

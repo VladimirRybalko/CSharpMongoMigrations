@@ -72,7 +72,7 @@ namespace CSharpMongoMigrations.Tests
 
             // Assert
             element.Should().NotBeNull();
-            element.Value.Should().Be(value);
+            element.Value.AsGuid.Should().Be(value);
         }
 
         [Fact]
@@ -82,14 +82,14 @@ namespace CSharpMongoMigrations.Tests
             var name = AutoFixture.String();
             var oldValue = Guid.NewGuid();
             var newValue = Guid.NewGuid();
-            var document = new BsonDocument(new BsonElement(name, oldValue));
+            var document = new BsonDocument(new BsonElement("_id", new BsonBinaryData(Guid.NewGuid(), GuidRepresentation.Standard)));
 
             // Act
             document.ChangeValue(name, newValue);
             var result = document.GetValue(name);
 
             // Assert
-            result.Should().Be(newValue);
+            result.AsGuid.Should().Be(newValue);
         }
     }
 }

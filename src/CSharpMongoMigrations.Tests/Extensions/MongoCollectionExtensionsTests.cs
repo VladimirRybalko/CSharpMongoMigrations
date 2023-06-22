@@ -13,7 +13,7 @@ namespace CSharpMongoMigrations.Tests
         public void UpdateFact()
         {
             // Arrange
-            var document = new BsonDocument(new BsonElement("_id", Guid.NewGuid()));
+            var document = new BsonDocument(new BsonElement("_id", new BsonBinaryData(Guid.NewGuid(), GuidRepresentation.Standard)));
             var mockCollection = new Mock<IMongoCollection<BsonDocument>>();
 
             mockCollection.Setup(x => x.ReplaceOne(It.IsAny<FilterDefinition<BsonDocument>>(), document, It.IsAny<ReplaceOptions>(), It.IsAny<CancellationToken>()));

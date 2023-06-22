@@ -1,13 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28803.452
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSharpMongoMigrations.Demo", "CSharpMongoMigrations.Demo\CSharpMongoMigrations.Demo.csproj", "{9F8EA935-AE93-474F-B86E-F83ED3C45789}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSharpMongoMigrations.Tests", "CSharpMongoMigrations.Tests\CSharpMongoMigrations.Tests.csproj", "{E862FF52-5809-4455-B0E1-BDD5408E83C8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSharpMongoMigrations", "CSharpMongoMigrations\CSharpMongoMigrations.csproj", "{310926BA-E1A8-487C-B968-58E3916DBB66}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CEABBD0A-BF58-4B8C-ADF8-C2E729636F25}"
+	ProjectSection(SolutionItems) = preProject
+		CSharpMongoMigrations.nuspec = CSharpMongoMigrations.nuspec
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

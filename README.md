@@ -1,6 +1,6 @@
 # CSharpMongoMigrations
 
-[![NuGet](https://img.shields.io/badge/nuget-2.3.0-blue.svg)](https://www.nuget.org/packages/CSharpMongoMigrations/)
+[![NuGet](https://img.shields.io/badge/nuget-2.4.0-blue.svg)](https://www.nuget.org/packages/CSharpMongoMigrations/)
 
 ## What is it?
 
@@ -8,7 +8,7 @@
 
 
 ## Documentation API
-Generally, there are three types of migrations.
+Generally, there are four types of migrations.
 
 1) **Common migration**
 
@@ -93,7 +93,7 @@ Here, the *Migration* attribute defines the target collection name and the speci
 
 4) **Conditional migration**
 
-These migrations allow to skip specific migration based on defined condition.
+These migrations might be skipped based on defined condition.
 ```csharp
     [Migration(4, "Add Migration when condition meets")]
     public sealed class ConditionalMigrations : Migration
@@ -116,21 +116,19 @@ These migrations allow to skip specific migration based on defined condition.
             collection.DeleteOne(idFilter);
         }
 
-        // Check your condition
+        // Up condition
         public override bool ShouldUp()
         {
             return true;
         }
 
-        // Check your condition
+        // Down condition
         public override bool ShouldDown()
         {
             return false;
         }
     }
 ```
-
-Here, the *ShouldUp* and *ShouldDown* overridable methods allow you to check custom conditions to apply or skip migrations.
 
 You can also find more detailed examples in the *CSharpMongoMigrations.Demo* project.
 
