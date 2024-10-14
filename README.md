@@ -1,6 +1,6 @@
 # CSharpMongoMigrations
 
-[![NuGet](https://img.shields.io/badge/nuget-2.4.0-blue.svg)](https://www.nuget.org/packages/CSharpMongoMigrations/)
+[![NuGet](https://img.shields.io/badge/nuget-2.5.0-blue.svg)](https://www.nuget.org/packages/CSharpMongoMigrations/)
 
 ## What is it?
 
