@@ -46,6 +46,30 @@ namespace CSharpMongoMigrations
         }
 
         /// <summary>
+        /// Add new property to the document.
+        /// </summary>
+        /// <param name="document">The target document.</param>
+        /// <param name="property">The desired property name.</param>
+        /// <param name="value">The desired property value.</param>
+        public static void AddProperty(this BsonDocument document, string property, Guid value)
+        {
+            document.AddProperty(property, value, GuidRepresentation.Standard);
+        }
+
+        /// <summary>
+        /// Add new property to the document.
+        /// </summary>
+        /// <param name="document">The target document.</param>
+        /// <param name="property">The desired property name.</param>
+        /// <param name="value">The desired property value.</param>
+        /// <param name="guidRepresentation">Represents the representation to use when converting a Guid to a BSON binary value.</param>
+        public static void AddProperty(this BsonDocument document, string property, Guid value, GuidRepresentation guidRepresentation)
+        {
+            var element = new BsonBinaryData(value, guidRepresentation);
+            document.Add(property, element);
+        }
+
+        /// <summary>
         /// Add the unique identifier to the document.
         /// </summary>
         /// <param name="document">The target document.</param>
@@ -53,8 +77,7 @@ namespace CSharpMongoMigrations
         /// <remarks>Id is always a Guid value by convention.</remarks>
         public static void AddUniqueIdentifier(this BsonDocument document, Guid value)
         {
-            var id = new BsonBinaryData(value, GuidRepresentation.Standard);
-            document.AddProperty("_id", id);
+            document.AddUniqueIdentifier(value, GuidRepresentation.Standard);
         }
 
         /// <summary>
@@ -93,11 +116,7 @@ namespace CSharpMongoMigrations
         /// <param name="value"></param>
         public static void ChangeValue(this BsonDocument document, string property, Guid value)
         {
-            var newBsonBinaryData = new BsonBinaryData(value, GuidRepresentation.Standard);
-            var @new = new BsonElement(property, newBsonBinaryData);
-
-            document.Remove(property);
-            document.Add(@new);
+            document.ChangeValue(property, value, GuidRepresentation.Standard);
         }
 
         /// <summary>
