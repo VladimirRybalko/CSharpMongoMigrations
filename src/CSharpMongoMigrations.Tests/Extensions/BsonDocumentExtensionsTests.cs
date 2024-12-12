@@ -41,7 +41,6 @@ namespace CSharpMongoMigrations.Tests
             act.Should().Throw<Exception>();
         }
 
-
         [Fact]
         public void AddPropertyFact()
         {
@@ -57,6 +56,40 @@ namespace CSharpMongoMigrations.Tests
             // Assert
             element.Should().NotBeNull();
             element.Value.Should().Be(value);
+        }
+
+        [Fact]
+        public void AddPropertyGuidFact()
+        {
+            // Arrange
+            var name = AutoFixture.String();
+            var value = Guid.NewGuid();
+            var document = new BsonDocument();
+
+            // Act
+            document.AddProperty(name, value);
+            var element = document.GetElement(name);
+
+            // Assert
+            element.Should().NotBeNull();
+            element.Value.AsGuid.Should().Be(value);
+        }
+
+        [Fact]
+        public void AddPropertyGuidWithStandardGuidRepresentationFact()
+        {
+            // Arrange
+            var name = AutoFixture.String();
+            var value = Guid.NewGuid();
+            var document = new BsonDocument();
+
+            // Act
+            document.AddProperty(name, value, GuidRepresentation.Standard);
+            var element = document.GetElement(name);
+
+            // Assert
+            element.Should().NotBeNull();
+            element.Value.AsGuid.Should().Be(value);
         }
 
         [Fact]
@@ -76,7 +109,42 @@ namespace CSharpMongoMigrations.Tests
         }
 
         [Fact]
+        public void AddUniqueIdentifierWithStandardGuidRepresentationFact()
+        {
+            // Arrange
+            var value = Guid.NewGuid();
+            var document = new BsonDocument();
+            var guidRepresentation = GuidRepresentation.Standard;
+
+            // Act
+            document.AddUniqueIdentifier(value, guidRepresentation);
+            var element = document.GetElement("_id");
+
+            // Assert
+            element.Should().NotBeNull();
+            element.Value.AsGuid.Should().Be(value);
+        }
+
+        [Fact]
         public void ChangeValueFact()
+        {
+            // Arrange
+            var name = AutoFixture.String();
+            var oldValue = AutoFixture.Int();
+            var newValue = AutoFixture.Int();
+            var document = new BsonDocument(new BsonElement("_id", new BsonBinaryData(Guid.NewGuid(), GuidRepresentation.Standard)));
+
+            // Act
+            document.AddProperty(name, oldValue);
+            document.ChangeValue(name, newValue);
+            var result = document.GetValue(name);
+
+            // Assert
+            result.AsInt32.Should().Be(newValue);
+        }
+
+        [Fact]
+        public void ChangeValueGuidFact()
         {
             // Arrange
             var name = AutoFixture.String();
@@ -85,7 +153,26 @@ namespace CSharpMongoMigrations.Tests
             var document = new BsonDocument(new BsonElement("_id", new BsonBinaryData(Guid.NewGuid(), GuidRepresentation.Standard)));
 
             // Act
+            document.AddProperty(name, oldValue);
             document.ChangeValue(name, newValue);
+            var result = document.GetValue(name);
+
+            // Assert
+            result.AsGuid.Should().Be(newValue);
+        }
+
+        [Fact]
+        public void ChangeValueGuidWithStandardGuidRepresentationFact()
+        {
+            // Arrange
+            var name = AutoFixture.String();
+            var oldValue = Guid.NewGuid();
+            var newValue = Guid.NewGuid();
+            var document = new BsonDocument(new BsonElement("_id", new BsonBinaryData(Guid.NewGuid(), GuidRepresentation.Standard)));
+
+            // Act
+            document.AddProperty(name, oldValue);
+            document.ChangeValue(name, newValue, GuidRepresentation.Standard);
             var result = document.GetValue(name);
 
             // Assert
