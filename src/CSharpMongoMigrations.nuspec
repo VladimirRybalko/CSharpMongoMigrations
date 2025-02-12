@@ -10,13 +10,13 @@
     <projectUrl>https://github.com/VladimirRybalko/CSharpMongoMigrations</projectUrl>
     <description>CSharp migrations tool for MongoDb</description>
     <summary>CSharp migrations tool for MongoDb</summary>
-    <releaseNotes>Added conditional migrations. Project is migrated to the .netstandard 2.1.</releaseNotes>
+    <releaseNotes>MongoDBDriver is upgraded.</releaseNotes>
     <readme>docs\README.md</readme>
     <license type="expression">MIT</license>
     <tags>mongodb mongo nosql migrations netstandard</tags>
     <dependencies>
       <group targetFramework="netstandard2.1">
-        <dependency id="MongoDB.Driver" version="2.20.0" />
+        <dependency id="MongoDB.Driver" version="3.1.0" />
       </group>
     </dependencies>
     
