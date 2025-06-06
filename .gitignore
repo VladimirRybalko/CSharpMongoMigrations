@@ -238,6 +238,10 @@ _Pvt_Extensions
 GeneratedArtifacts/
 ModelManifest.xml
 
+# JetBrains Rider
+.idea/
+*.sln.iml
+
 # Paket dependency manager
 .paket/paket.exe
 
