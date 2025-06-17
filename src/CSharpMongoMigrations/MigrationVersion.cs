@@ -1,4 +1,6 @@
 ﻿using System;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace CSharpMongoMigrations
 {
@@ -24,6 +26,7 @@ namespace CSharpMongoMigrations
         /// <summary>
         /// The unique identifier of the current migration.
         /// </summary>
+        [BsonGuidRepresentation(GuidRepresentation.Standard)]
         public Guid Id { get; } = Guid.NewGuid();
 
         /// <summary>
