@@ -1,5 +1,5 @@
-﻿using MongoDB.Driver;
-using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using MongoDB.Driver;
 
 namespace CSharpMongoMigrations
 {
@@ -9,7 +9,7 @@ namespace CSharpMongoMigrations
     /// </summary>
     internal class MongoClientFactory
     {
-        private static readonly Dictionary<string, IMongoClient> _clients = new Dictionary<string, IMongoClient>();
+        private static readonly ConcurrentDictionary<string, IMongoClient> _clients = new ConcurrentDictionary<string, IMongoClient>();
 
         /// <summary>
         /// Get mongo client by Mongo connection URL
@@ -20,7 +20,7 @@ namespace CSharpMongoMigrations
         { 
             var mongoUrlStr = mongoUrl.ToString();
             if (!_clients.ContainsKey(mongoUrlStr))
-                _clients.Add(mongoUrlStr, new MongoClient(mongoUrl));
+                _clients.TryAdd(mongoUrlStr, new MongoClient(mongoUrl));
 
             return _clients[mongoUrlStr];
         }
