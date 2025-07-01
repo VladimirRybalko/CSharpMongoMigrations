@@ -2,11 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-
     <IsPackable>false</IsPackable>
-
     <AssemblyName>CSharpMongoMigrations.Tests</AssemblyName>
-
     <RootNamespace>CSharpMongoMigrations.Tests</RootNamespace>
   </PropertyGroup>
 
